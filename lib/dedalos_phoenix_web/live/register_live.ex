@@ -1,0 +1,110 @@
+defmodule DedalosPhoenixWeb.RegisterLive do
+
+  
+  use DedalosPhoenixWeb, :live_view
+  alias Phoenix.LiveView.JS 
+
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, nombre_usuario: "" , password: "", token: "")}
+    end
+
+
+  def hide_button(js \\ %JS{}) do
+  js
+  |> JS.hide(transition: "fade-out", to: "#button")
+#  |> JS.hide(transition: "fade-out-scale", to: "#modal-content")
+end
+
+  def registerStream(_usr,_pwd,_tkn) do
+    IO.inspect("Hi")
+
+    end 
+
+  # async registerStream(e){
+  #       e.preventDefault();
+
+  #       const { nombre_usuario } = this.state ;        
+  #       const { password } = this.state ;
+
+        
+  #       const base = "http://biblioteca.ccpadrevarela.org";
+  #       const formData = new FormData();
+  #       formData.set("firstname", this.state.nombre);
+  #       formData.set("lastname", this.state.apellidos);
+  #       formData.set("username", this.state.nombre_usuario);
+  #       formData.set("password", this.state.password);
+    
+  #       const registration = await axios({
+  #         method: "POST",
+  #         url: `${base}/auth/users/`,
+  #         data: formData,
+  #         config: {
+  #           headers: { "Content-Type": "multipart/form-data",}
+  #         }
+  #       }); 
+
+
+  #       const authorization = await axios({
+  #           method: "POST",
+  #           url: `${base}/auth/token/login/`,
+  #           data: formData,
+  #           config: {
+  #             headers: { "Content-Type": "multipart/form-data" }
+  #           }
+  #         });
+      
+  #         localStorage.setItem("token", authorization.data.auth_token);
+  #         localStorage.setItem("saludo", "Hola " + this.state.nombre_usuario);
+      
+  #         await this.setState({
+  #           loading: false ,
+  #           redirect: true ,
+  #         });
+      
+  #       //  this.props.history.push("/opac");
+  #       }
+
+
+  def render(assigns) do
+    ~H"""
+          <div className="registerForm">
+    <form onSubmit="">
+        <div className="subHeader" ><h3>Formulario de Registro</h3></div>
+        <br />
+
+        <div className="form-group">
+        <input type="text" name="inputNombre" placeholder="Nombre" value="" 
+        onInput=""/>
+        <br/>
+        <input type="text" name="inputApellidos" placeholder="Apellidos" value=""
+        onInput=""/>
+        <br/> 
+        </div>   
+     
+        <div className="form-group">
+        
+        <br/>
+        <input type="text" name="inputNombreUsuario" placeholder="nombre de usuario" value=""
+        onInput=""/>
+        <br/>
+        <input type="password" name="inputPassword" placeholder="password" value=""
+        onInput=""/>
+        <br/>
+        </div>
+
+        <div className="form-group">
+                   <button onClick="" type="submit" className="btn btn-common" value=""> 
+                    <i className="fa fa-book" />
+                    Registrarse
+                   </button>  
+        </div>
+
+        </form>
+        </div>
+
+
+    """
+
+    end
+
+  end 

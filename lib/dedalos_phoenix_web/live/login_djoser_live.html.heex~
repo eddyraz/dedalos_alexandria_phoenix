@@ -1,0 +1,152 @@
+import React, { Component } from "react";
+import axios from "axios";
+
+import { Redirect, Link } from "react-router-dom";
+import Opac from './vrlOpac' ;
+import NavBar from './vrlNavBar' ;
+
+
+export default class Login extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      redirect: false,
+      loading: false,
+      username: "",
+      password: ""
+    };
+
+    this.initStream = this.initStream.bind(this);
+  }
+
+
+  componentDidMount(){
+     localStorage.clear() ;
+}
+
+
+  async initStream(e) {
+
+    e.preventDefault();
+    /*
+    await this.setState({
+      
+    });
+    */
+
+    const base = "http://biblioteca.ccpadrevarela.org";
+
+    const formData = new FormData();
+    formData.set("username", this.state.username);
+    formData.set("password", this.state.password);
+
+    const authorization = await axios({
+      method: "POST",
+      url: `${base}/auth/token/login/`,
+      data: formData,
+      config: {
+        headers: { "Content-Type": "multipart/form-data" }
+      }
+    });
+
+    localStorage.setItem("token", authorization.data.auth_token);
+    localStorage.setItem("redirect", true);
+
+    localStorage.setItem("username", this.state.username);
+
+    const authToken = localStorage.getItem("token");
+
+    if (authToken){
+      await this.setState({
+        loading: false,
+        redirect: true,
+      });
+    }
+
+    const access_granting =  await axios ({ 
+      method: "GET",
+      url: `${base}/auth/users/me/`,
+      headers: {"Authorization": `token ${authToken}`},
+
+    });
+ 
+    const logginPermissionData = access_granting.data ; 
+    console.log(logginPermissionData) ; 
+    localStorage.setItem("saludo", "Hola " + logginPermissionData['username']);
+    return (<NavBar ShowLoginBadge="true" />) ;
+
+ 
+  }
+
+
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
+  render() {
+
+    const { redirect } = this.state;
+
+    if (redirect) {
+      return <Opac isAuthenticated="true" />;
+    }
+
+    return (
+      
+      <form className="loginForm"  onSubmit={this.initStream}>
+
+      <div className="login-root">
+        <div className="login-card">
+          <h4>Login</h4>
+          <input
+            type="text"
+            placeholder="Nombre de Usuario"
+            name="username"
+            onChange={e => this.handleChange(e)}
+          />
+          <br/>
+          <br/>
+
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={e => this.handleChange(e)}
+          />
+
+          <br/>
+          <br/>
+
+          <button  type="submit" className="btn btn-common" value=""> 
+          <i className="fa fa-book" />
+          Entrar 
+          </button>
+
+          <div className="login-notes">
+          <h3>Notas: </h3> 
+
+          <p>
+            <ul>
+              <li>La contraseña debe tener al menos 8 caracteres</li>
+              <li>Debe contener mayúsculas minúsculas y números</li>
+              <li>No puede contener el nombre, apellidos, o nombre de usuario</li>
+              
+            </ul>
+          </p>
+          </div>
+
+          <br/>
+          <p>
+                ¿No tiene una cuenta? <Link to="/register">Regístrese</Link>
+          </p> 
+
+        </div>
+
+      </div>
+      </form>
+    );
+  }
+}

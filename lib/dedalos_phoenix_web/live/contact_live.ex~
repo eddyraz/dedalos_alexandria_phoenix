@@ -1,0 +1,13 @@
+defmodule DedalosPhoenixWeb.ContactLive do
+
+  use DedalosPhoenixWeb, live_view
+
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, email: "mx.arqhabana.net")}
+    
+
+    end
+
+
+
+  end

@@ -1,0 +1,22 @@
+defmodule Web.Components do
+  import Phoenix.LiveView, only: [assign: 3, assign_new: 3], warn: false
+  import Phoenix.LiveView.Helpers
+  alias Phoenix.LiveView.JS
+
+  def tab_list(assigns) do
+    assigns =
+      assigns
+      |> assign_new(:active_class, fn -> "border-indigo-500 text-indigo-600" end)
+      |> assign_new(:inactive_class, fn -> "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" end)
+      |> assign_new(:class, fn -> "" end)
+      |> assign_new(:tab, fn -> [] end)
+
+    ~H"""
+    <div id={@id} class={@class}>
+      <div class="sm:hidden">
+        <label for={"#{@id}-mobile"} class="sr-only">Select a tab</label>
+        <select
+          id={"#{@id}-mobile"}
+          name="tabs"
+          phx-change={JS.dispatch("js:tab-selected", detail: %{id: "#{@id}-mobile"})}
+          class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:r

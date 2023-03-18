@@ -1,0 +1,12 @@
+defmodule PentoWeb.WrongLive do
+   use Phoenix.LiveView, layout: {PentoWeb.LayoutView, "live.html"}
+
+
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, score: 0, message: "Make a Guess")}
+
+
+  end
+
+
+end

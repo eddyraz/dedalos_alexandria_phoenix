@@ -1,0 +1,19 @@
+(undo-tree-save-format-version . 1)
+"5a86cca561ec458e031d3c39312978793e752057"
+[nil nil nil nil (25594 7474 808035 663000) 0 nil]
+([nil nil ((433 . 438) (t 25593 21814 909264 711000)) nil (25594 54949 368243 786000) 0 nil])
+([nil nil ((nil rear-nonsticky nil 506 . 507) (nil fontified nil 503 . 507) (nil fontified nil 486 . 503) (nil fontified nil 477 . 486) (nil fontified nil 465 . 477) (nil fontified nil 464 . 465) (nil fontified nil 461 . 464) (nil fontified nil 443 . 461) (nil fontified nil 439 . 443) (nil fontified nil 438 . 439) (438 . 507)) nil (25594 54949 368241 830000) 0 nil])
+([nil nil ((495 . 502)) nil (25594 54949 368237 989000) 0 nil])
+([nil nil ((#("." 0 1 (fontified t face font-lock-string-face)) . -501) (undo-tree-id7 . -1) 502) nil (25594 54949 368235 614000) 0 nil])
+([nil nil ((501 . 502)) nil (25594 54949 368232 820000) 0 nil])
+([nil nil ((#("a" 0 1 (fontified t face font-lock-string-face)) . -502) (undo-tree-id4 . -1) (#("p" 0 1 (fontified t face font-lock-string-face)) . -503) (undo-tree-id5 . -1) (#("p" 0 1 (fontified t face font-lock-string-face)) . -504) (undo-tree-id6 . -1) 505) nil (25594 54949 368229 957000) 0 nil])
+([nil nil ((502 . 504)) nil (25594 54949 368225 696000) 0 nil])
+([nil nil ((#("f" 0 1 (fontified t face font-lock-string-face)) . -502) (undo-tree-id0 . -1) (undo-tree-id1 . -1) (#("r" 0 1 (fontified t face font-lock-string-face)) . -503) (undo-tree-id2 . -1) (undo-tree-id3 . -1) 504) nil (25594 54949 368222 344000) 0 nil])
+([nil nil ((502 . 506)) nil (25594 54949 368202 718000) 0 nil])
+([nil nil ((506 . 507)) nil (25594 54949 368198 38000) 0 nil])
+([nil nil ((516 . 521) (t 25594 54949 378970 627000)) nil (25594 54984 366026 391000) 0 nil])
+([nil nil ((nil fontified nil 598 . 599) (nil fontified nil 595 . 598) (nil fontified nil 590 . 595) (nil fontified nil 589 . 590) (nil fontified nil 584 . 589) (nil fontified nil 569 . 584) (nil fontified nil 560 . 569) (nil fontified nil 548 . 560) (nil fontified nil 547 . 548) (nil fontified nil 544 . 547) (nil fontified nil 526 . 544) (nil fontified nil 522 . 526) (nil fontified nil 521 . 522) (521 . 599)) nil (25594 54984 366023 457000) 0 nil])
+([nil nil ((#("g" 0 1 (fontified t face font-lock-string-face)) . -585) (undo-tree-id15 . -1) (#("r" 0 1 (fontified t face font-lock-string-face)) . -586) (undo-tree-id16 . -1) (#("e" 0 1 (fontified t face font-lock-string-face)) . -587) (undo-tree-id17 . -1) (#("e" 0 1 (fontified t face font-lock-string-face)) . -588) (undo-tree-id18 . -1) (#("n" 0 1 (fontified t face font-lock-string-face)) . -589) (undo-tree-id19 . -1) 590) nil (25594 54984 366018 708000) 0 nil])
+([nil nil ((585 . 589)) nil (25594 54984 366009 628000) 0 nil])
+([nil current ((#("c" 0 1 (fontified t face font-lock-string-face)) . -578) (undo-tree-id8 . -1) (#("o" 0 1 (fontified t face font-lock-string-face)) . -579) (undo-tree-id9 . -1) (#("l" 0 1 (fontified t face font-lock-string-face)) . -580) (undo-tree-id10 . -1) (#("o" 0 1 (fontified t face font-lock-string-face)) . -581) (undo-tree-id11 . -1) (#("r" 0 1 (fontified t face font-lock-string-face)) . -582) (undo-tree-id12 . -1) (#("s" 0 1 (fontified t face font-lock-string-face)) . -583) (undo-tree-id13 . -1) (#("/" 0 1 (fontified t face font-lock-string-face)) . -584) (undo-tree-id14 . -1) 585) nil (25594 54984 366003 552000) 0 nil])
+nil

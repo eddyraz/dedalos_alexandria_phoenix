@@ -1,0 +1,615 @@
+import React, { Component } from 'react' ;
+import SearchBar from './vrlSearchBar' ;
+
+
+//imports tenporales para mostrar la tabla de resultados aqui mismo
+import MaterialTable from "material-table";
+
+//con react-bootstrap para la tabla 
+import Table from 'react-bootstrap/Table' ;
+
+
+//prueba con react-bootstrap-table-next
+import BootstrapTable from 'react-bootstrap-table-next';
+//import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+
+
+//paquetes para material-ui table
+import { DataGrid } from '@material-ui/data-grid';
+
+import _ from 'lodash' ;
+
+
+
+
+//temporal para buscar y no renderear el spinner todavia
+import axios from 'axios' ;
+
+import  MUIDataTable from "mui-datatables";
+
+
+
+let URL_ELASTIC = 'http://biblioteca.ccpadrevarela.org:19200/_all/_search?size=10000' ;
+let URL_ELASTIC_ADV = 'http://biblioteca.ccpadrevarela.org:19200' ;
+let URL_HOSTING = 'http://api.dedalos.arqhabana.org:5590/api/obtener_recurso.php' ;
+
+export default class DataDisplay extends Component {
+
+    constructor(props){
+        super(props);
+        this.state = {
+            
+            //datos para rendering condicional
+            "fetchedData" : "FalseBasic",
+            isAuthenticated : false,
+            redirect : false, 
+
+            //datos para guardar lo que se hizo fetching con axios
+            "ELASTIC_QUERY_TERMS": {
+                'titulo': 'título',
+                'autor': 'autor.nombre_autor',
+                'autor2': 'autor2.nombre_autor',
+                'autor3': 'autor3.nombre_autor',
+                'editorial': 'editorial.nombre_editorial',
+                'signatura_topografica': 'signatura',
+                'localizacion': 'localización',
+                'isbn': 'isbn',
+                'resumen': 'resumen',
+                'palabras_clave': 'palabras_clave',
+                'tipo_documento': 'tipo_documento',
+                'tutor1':'tutor1',
+                'tutor2': 'tutor2',
+                'descriptor': 'descriptores.nombre_descriptor'},
+                
+
+            "datos_elastic": [],
+            "datos_hosting": [],
+            "biblioResourcesHosting": [] ,
+            result_table_slicing: [],
+            resultStartPag: 1,
+            resultsEndPag: 10,
+
+	        //datos del body query con axios
+	        "curlQuery": "",
+	        "curl_parsed_data": "",
+
+            //datos del formulario de SearchBar 
+            "titulo" : "",
+            "autor": "",
+            "autor2": "",
+            "autor3": "",
+            "resumen": "",
+            "propietario_recurso": "",
+            "ISBN" : "",
+
+            "editorial": "",
+            "signatura_topografica": "",
+            "descriptor": "",
+            "QUERY_OPERATOR": "",
+	        "tipo_recurso": "",
+	        "tipo_recurso_fa_icon": "",
+
+	        //Datos para la busqueda avanzada
+            "searchIndex": [],
+	        "searchTerms": [],
+            "indices": [], 
+            "totalResults": "",
+            "elasticQuery": [],
+
+
+            "finalQuery" : "",
+
+
+            //Para Material-Table
+            Cell: [], 
+            data: [] ,
+            data_hosting: [],
+            columns:["Signatura", "Tipo de Recurso","Título",	"Autor", "Autor2", "Resumen", "ISBN"], 
+            
+            /*
+
+            columns: [
+                
+                { field: 'signatura', headerName: 'Signatura', width: 70 },
+                { field: 'tipo_recurso', headerName: 'Tipo de Recurso', width: 70 },
+                { field: 'titulo', headerName: 'Título', width: 250 },
+                {field: 'autor',  headerName: 'Autor',  width: 160 },
+                { field: 'autor2',headerName: 'Autor2', width: 160},
+                { field: 'resumen',headerName: 'Resumen', width: 360},
+                { field: 'isbn',headerName: 'ISBN', width: 60}
+              ],
+
+            */
+
+              columns: [
+                  {dataField: 'signatura',text: 'Signatura'}, 
+                  {dataField: 'tipo_recurso',text: 'Tipo de Recurso'}, 
+                  {dataField: 'titulo',text: 'Título'}, 
+                  {dataField: 'autor',text: 'Autor'}, 
+                  {dataField: 'autor2',text: 'Autor2'}, 
+                  {dataField: 'resumen',text: 'Resumen'}, 
+                  {dataField: 'isbn',text: 'ISBN'}
+                                  
+                ],  
+        
+                
+            options: {
+                filterType: 'checkbox',
+                textLabels: {
+                body: {
+                    noMatch: "Lo sentimos, no se encontraron resultados",
+                    toolTip: "Ordenar",
+                    columnHeaderTooltip: column => `Ordenar la columna ${column.label}`
+                },
+
+                toolbar: {
+                    search: "Filtrar Resultados",
+                    downloadCsv: "Descargar resultados en formato csv",
+                    print: "Imprimir",
+                    viewColumns: "Ver Columnas",
+                    filterTable: "Filtrar Tabla"
+                },
+
+                pagination: {
+                    next: "Página Siguiente ",
+                    previous: "Página Anterior",
+                    rowsPerPage: "Resultados Por Página",
+                    displayRows: "de"
+                },
+
+
+                filter: {
+                    all: "Todos",
+                    title: "FILTRAR",
+                    reset: "RESET",
+
+                },
+
+
+                viewColumns: {
+                    title: "Mostrar Columnas",
+                    titleAria: "Mostrar/Ocultar Columnas"
+
+                },
+
+                selectedRows: {
+                    text: "Columna(s) seleccionadas",
+                    delete: "Borrar columna",
+                    deleteAria: "Borrar las columnas seleccionadas"
+                }
+
+                }
+              },
+ 
+            
+	    
+        }
+        
+	this.onFormSubmit = this.onFormSubmit.bind(this) ;
+	this.onFormSubmitAdvanced = this.onFormSubmitAdvanced.bind(this) ;
+    this.showFaIcon = this.showFaIcon.bind(this);
+    this.truncateText = this.truncateText.bind(this) ;
+    this.tableWindowing = this.tableWindowing.bind(this) ;
+    this.dataFetching = this.dataFetching.bind(this) ;
+    
+ 
+    }
+    
+    
+
+
+    showFaIcon(Index){
+	switch(Index){
+
+	case "opac_libros": {
+            return (<section><i className="fa fa-book" aria-hidden="true"/><span className="resource_icon_text">Libro</span></section>);
+	    break;}
+
+       	case "opac_articulos_revistas": {
+	    return (<section><i className="fa fa-newspaper-o" aria-hidden="true"/> <span className="resource_icon_text">Articulo de Revista</span></section>);
+	    break;}
+
+	case "opac_tesis": {
+	    return (<section><i className="fa fa-graduation-cap" aria-hidden="true"/><span className="resource_icon_text">Tesis o Tesina</span></section>);
+	    break;}
+	case "opac_docs_dig": {
+	    return (<section><i className="fa fa-file-pdf-o" aria-hidden="true"/><span className="resource_icon_text">Documento Digital</span></section>);
+	    break;}
+	}
+    }
+
+    truncateText(str){
+    return(str.length > 150 ? str.substring(0,150) + " ... ": str) ;
+
+}
+  
+
+	
+    
+   
+    onFormSubmitAdvanced(searchIndex,searchTerms){
+	alert('Still in construction');
+    }
+
+    onFormSubmit(queryObject){
+
+        // analyze code in this segment since is slowing doooown the execution of the search component 
+        let getLastPropertyOf = (qObj) => {
+            return (Object.keys(qObj)[Object.keys(qObj).length-1]) ;
+  
+          }
+      
+        
+        //check empty properties of queryObject object
+        !queryObject.selectedIndex ? queryObject.selectedIndex = '_all' : this.setState({indices: queryObject.selectedIndex}) ;
+        !queryObject.QUERY_OPERATOR ? queryObject.QUERY_OPERATOR = 'OR' : this.setState({QUERY_OPERATOR: queryObject.QUERY_OPERATOR})
+        //loop through queryObject object to delete empty fields with the exclusion of 'selectedIndex' and 'QUERY_OPERATOR'
+        for(const key in queryObject ){
+            !queryObject[key] && queryObject[key] !== ('selectedIndex' ||  'QUERY_OPERATOR') ? delete queryObject[key] && delete this.state.ELASTIC_QUERY_TERMS[key]: 
+            this.setState({key: queryObject[key]});
+            
+        }
+         
+        let ultimateQuery = qObject => {
+            
+            for(const kElement in qObject){
+                if (kElement !== 'selectedIndex' && kElement !== 'QUERY_OPERATOR'){
+                this.state.finalQuery += (`${this.state.ELASTIC_QUERY_TERMS[kElement]}: ${qObject[kElement]}` + ' ' + `${qObject['QUERY_OPERATOR']}` + ' '); 
+                
+                }
+                
+            }  
+               let superQuery = this.state.finalQuery.slice(0,-4);
+               return (superQuery);
+        }
+        
+        console.log(ultimateQuery(queryObject));
+
+        
+
+        
+        const dataFromELASTIC = axios({
+            url: `${URL_ELASTIC_ADV}/${queryObject.selectedIndex}/_search?size=10000`,
+                method: 'POST',
+                timeout: 0,
+                headers: {'Content-Type': 'application/json'},
+            data: {
+                'query': {
+                'query_string': {
+                    
+                'query': ultimateQuery(queryObject)
+      
+                   }
+                }}}) 
+
+   
+
+	{/*        
+	const dataFromHosting = axios({
+	    url: `${URL_HOSTING}`,
+	    method: 'POST',
+            timeout: 0,
+	    headers: {"Content-Type": "application/json"},
+	    data: {
+		"titulo" : `${titulo}`,
+		"autor":  `${autor}`,
+		"autor2": "",
+		"autor3": "",
+		"resumen": "",
+		"propietario_recurso": "",
+		"ISBN" : "",
+		"editorial": `${editorial}`,
+		"signatura_topografica": `${signatura_topografica}`,
+		"descriptor": `${descriptor}`,
+		"tipo_recurso": 1,
+		"QUERY_OPERATOR": "OR" 
+
+        }})
+
+	 */}
+
+ axios.all([dataFromELASTIC , /*dataFromHosting*/]).then(axios.spread((...responses) => {
+     const responseElastic = responses[0].data['hits']['hits'] ;
+     this.setState({totalResults: responses[0].data['hits']['total']}) ;
+     this.setState({datos_elastic: responseElastic});
+     console.log(responseElastic);
+    // this.state.datos_elastic.map(biblio_res => {this.setState({biblioResources: biblio_res._source}) });
+     this.setState({fetchedData: "Fetched"});
+
+/*     
+     this.state.datos_elastic.map(biblio_res => 
+        {this.setState({data: [[biblio_res._source['signatura'],
+                                this.showFaIcon(biblio_res._index),
+                                biblio_res._source['título'],
+                                biblio_res._source['autor']['nombre_autor'],
+                                biblio_res._source['autor2']['nombre_autor'],
+                                biblio_res._source['resumen'],
+                                biblio_res._source['isbn'],
+                    ]] })});
+
+*/
+
+/*
+    this.state.datos_elastic.map(biblio_res => 
+        this.setState(prevState => ({
+            data: [...prevState.data, 
+                
+                {id: biblio_res._source.signatura,
+                tipo_recurso: this.showFaIcon(biblio_res._index),
+                titulo: biblio_res._source.título,
+                autor: biblio_res._source.autor.nombre_autor,
+                autor2: biblio_res._source.autor2.nombre_autor,
+                resumen: this.truncateText(biblio_res._source.resumen),
+                ISBN: biblio_res._source.isbn}
+    ] })));                    
+    console.log(this.state.data) ;
+
+ */
+
+     const responseHosting = responses[1].data
+     this.setState({datos_hosting: responseHosting});
+     console.log(responseHosting) ;
+     this.state.datos_hosting.map(biblio_res_hosting => {this.setState({biblioResourcesHosting: biblio_res_hosting}) });
+
+ })).catch(error =>{
+     //alert("Lo sentimos ocurrió un  error ");
+ })
+
+}; 
+
+
+
+// Datos para MUI-Datatable
+
+
+back2Search(){
+    this.setState({fetchedData: "False"});
+}
+
+dataFetching(e,start,end){
+
+   
+    
+   const tabData =  this.state.datos_elastic.map(biblio_res =>
+    
+        <tr> <td key="datos_libro_signatura">{biblio_res._source['signatura']}</td>
+        <td key="datos_libro_index">{ this.showFaIcon(biblio_res._index) }</td>
+        <td key="datos_libro_titulo">{biblio_res._source['título']}</td>
+        <td key="datos_libro_autor">{biblio_res._source['autor']['nombre_autor']}</td>
+        <td key="datos_libro_autor2">{biblio_res._source['autor2']['nombre_autor']}</td>
+        <td key="datos_libro_resumen">{this.truncateText(biblio_res._source['resumen'])}</td>
+        <td key="datos_libro_isbn">{biblio_res._source['isbn']}</td>
+          </tr>).slice(start,end)
+    
+    return (tabData)
+
+    
+}
+
+tableWindowing(){
+    
+    let  items = []
+    let resultsPerPage = 25 
+    for(let  i=1;i<= this.state.totalResults/resultsPerPage ; i++){
+        items.push(i)
+            }
+    
+    const pageQuantityCode = items.map(item => 
+        <li className="page-item"><a class="page-link" onChange={this.dataFetching(11,20)} >{item}</a></li>
+        )
+
+    console.log(pageQuantityCode)        
+    return (pageQuantityCode)  
+
+}
+
+/*
+handlePaginationChange(e,newStart,newEnd){
+    
+    e.preventDefault();
+
+    this.setState({resultStartPag: newStart})
+    this.setState({resultsEndPag: newEnd})    
+
+    return(
+    
+        this.ShovelDisplayData()
+
+    )
+}
+
+*/
+
+/*
+dataShuffle(){
+    const table_results = []
+    const final_results = []
+    this.state.datos_elastic.map(biblio_res => 
+        table_results.push(
+        {id: biblio_res._source.signatura,
+            tipo_recurso: this.showFaIcon(biblio_res._index),
+            titulo: biblio_res._source.título,
+            autor: biblio_res._source.autor.nombre_autor,
+            autor2: biblio_res._source.autor2.nombre_autor,
+            resumen: this.truncateText(biblio_res._source.resumen),
+            ISBN: biblio_res._source.isbn}))
+
+     return(table_results)       
+        
+ 
+}   
+*/
+    
+    
+
+
+    ShovelDisplayData() {
+        switch (this.state.fetchedData) {
+
+        case "FalseBasic": {
+        return (
+
+        <div className="result-material-table">  
+          <SearchBar onSubmitBiblioData={this.onFormSubmit}/>
+        </div>
+
+                );
+            break;
+        }
+
+
+	case "FalseAdvanced": {
+        return (
+        <div className="result-material-table">  
+          <SearchBar onSubmit={this.onFormSubmitAdvanced}/>
+        </div>
+
+                );
+            break;
+        }    
+    
+        case "Fetched": {
+        return(
+        <div>
+          <section>
+	    <div className=" pre-search row">
+	      <div className="searchAgain  col-md-2” y padding-left: 27px">  
+
+
+          <a className="btn btn-common btn-md " href="http://biblioteca.ccpadrevarela.org:3001/opac"
+		   style={{"marginLeft":"15px","marginTop":"40px","marginBottom":"30px"}}> 
+                  <i className="fa fa-search"></i>
+                  Volver a Buscar 
+                                
+        </a>
+
+	      </div>
+
+	      <div className="localResults col-md-5">
+		<h4> Se han obtenido {this.state.totalResults} resultados </h4>
+	      </div>
+
+          <div className="remoteResults col-md-5">
+		<h4> Para resultados en otras bibliotecas pulse <a href="http://biblioteca.ccpadrevarela.org:3001/opac#RemoteTable">aquí</a> </h4>
+	      </div>
+
+	    </div>
+ <br/> 
+
+<div id="LocalTable">
+
+
+
+
+<Table striped bordered hover variant="light">
+  <colgroup span="4"></colgroup>
+  <thead className="thead-dark">
+  <tr>
+    <th>Signatura</th>
+    <th>Tipo de Recurso</th>
+    <th>Titulo</th>
+    <th>Autor</th>
+    <th>Autor2</th>
+    <th style={{"width":"400px"}}>Resumen</th>
+    <th>ISBN</th>
+  </tr>
+  </thead>
+
+  <tbody>
+    { this.dataFetching(this.state.resultStartPag,this.state.resultsEndPag) }
+</tbody>	    
+</Table>
+
+<div className="tablePagination">
+<nav aria-label="Page navigation example">
+  <ul className="pagination">
+    <li className="page-item"><a className="page-link" href="#">Anterior</a></li>
+    {this.tableWindowing()}
+    <li className="page-item"><a className="page-link" href="">Siguiente</a></li>
+  </ul>
+</nav>
+</div>
+
+    
+
+
+{/*
+<BootstrapTable keyField='signatura' 
+data={
+    this.state.datos_elastic.map(biblio_res => 
+    
+       {biblio_res._source['signatura']},
+       { this.showFaIcon(biblio_res._index) },
+       {biblio_res._source['título']},
+       {biblio_res._source['autor']['nombre_autor']},
+       {biblio_res._source['autor2']['nombre_autor']},
+       {this.truncateText(biblio_res._source['resumen'])},
+       {biblio_res._source['isbn']}
+        
+    )}
+        
+columns={ this.state.columns }   
+/>
+    */}
+</div>
+
+
+
+
+<div id="RemoteTable">
+<Table striped bordered hover variant="light">
+  <colgroup span="4"></colgroup>
+  <thead className="thead-dark">
+  <tr>
+    <th>Signatura</th>
+    <th>Tipo de Recurso</th>
+    <th>Titulo</th>
+    <th>Autor</th>
+    <th>Autor2</th>
+    <th style={{"width":"400px"}}>Resumen</th>
+    <th>ISBN</th>
+  </tr>
+  </thead>
+
+  <tbody>
+    {this.state.datos_hosting.map(biblio_res =>
+    
+	<tr> <td key="datos_libro_signatura">{biblio_res._source['signatura']}</td>
+				  <td key="datos_libro_index">{ this.showFaIcon(biblio_res._index) }</td>
+        <td key="datos_libro_titulo">{biblio_res._source['título']}</td>
+        <td key="datos_libro_autor">{biblio_res._source['autor']['nombre_autor']}</td>
+        <td key="datos_libro_autor2">{biblio_res._source['autor2']['nombre_autor']}</td>
+        <td key="datos_libro_resumen">{this.truncateText(biblio_res._source['resumen'])}</td>
+        <td key="datos_libro_isbn">{biblio_res._source['isbn']}</td>
+      </tr>)}
+</tbody>	    
+</Table>
+</div>
+
+
+
+</section>
+        </div> 
+    
+            );
+            break ;
+        }
+
+    }};   
+
+ 
+
+    
+
+
+
+
+render(){
+    return(
+        <section>
+            { this.ShovelDisplayData() } 
+        </section>
+    )
+ }
+
+}

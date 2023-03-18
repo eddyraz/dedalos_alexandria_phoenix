@@ -1,0 +1,102 @@
+defmodule Pentoweb.ApiClientLive do
+  use PentoWeb, :live_component
+
+
+  require Logger
+  use Tesla
+  use GenServer
+  
+
+  
+  
+  @dedalos_timeout_tae 60
+  @dedalos_timeout_servicios_supl 75
+  @config Application.get_env(:dedalos, :alejandria)
+
+  def mount(_params, _sessions, socket) do
+    {:ok,
+     assign(socket,
+       titulo: "",
+       autor: "",
+       autor: "",
+       autor3: "",
+       editorial: "",
+       signatura_topografica: "",
+       descriptor: "",
+       lugar_de_impresion: "",
+       resumen: "",
+       isbn: "",
+       localizacion: "",
+       QUERY_OPERATOR: ""
+     )}
+  end
+
+  def send_request(idx,sp) do
+    body =
+      get_body(
+        idx,
+        sp
+      )
+      |> Jason.encode()
+      |> elem(1)
+
+    url = get_url(idx)
+
+    Tesla.post(url, body, headers: get_headers(), recv_timeout: 30000)
+  end
+
+
+
+  def process_request() do
+
+    body = Jason.encode(%{query: %{query_string: %{query: "título: amelia"}}}) |> elem(1)
+    
+    raw_response = Tesla.post!('http://biblioteca.ccpadrevarela.org:19200/_all/_search?size=10000', body,
+      headers: ["User-Agent": "Dedalos", "Content-Type": "application/json"]
+    )
+    
+    raw_response.body
+    |> Jason.decode!()
+    |> Map.fetch("hits")
+    |> elem(1)
+    |> Map.fetch("hits")
+    |> elem(1)
+    |> Enum.map(fn x -> x["_source"] end)
+    
+  end
+
+  
+  def get_body(index, search_param) do
+    case index do
+      "_all" -> %{
+          query: %{
+            query_string: %{
+              query: "#{search_param}: 4633-EJ.1-2008"
+            }
+          }
+        }
+	
+      _ ->
+        ''
+    end
+      end
+
+  def get_url(class) do
+    @config[:endpoints][:base] <> @config[:endpoint][String.to_atom(class)]
+    end
+
+  def get_headers() do
+    [
+      "User-Agent": "Miio",
+      "Content-Type": @config[:headers][:auth][:content_type],
+     # Authorization: "Bearer " <> get_bearer_token()
+    ]
+  end
+
+  def get_data() do
+    {:ok}
+  end
+
+  
+ 
+end

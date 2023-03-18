@@ -1,0 +1,436 @@
+alias Phoenix.LiveView.JS
+
+
+<!-- import {Tab, Tabs, TabList, TabPanel } from 'react-tabs' ; -->
+<!-- import 'react-tabs/style/react-tabs.css'; -->
+
+<!-- import LoadingOverlay from 'react-loading-overlay'; -->
+
+
+
+<!-- export default class SearchBar extends Component{ -->
+
+<!--   constructor(props){ -->
+<!--     super(props); -->
+<!--     this.state = { -->
+<!--         "titulo": "", -->
+<!--         "autor": "", -->
+<!-- 	"autor2": "", -->
+<!-- 	"autor3": "", -->
+<!--         "editorial": "", -->
+<!--         "signatura_topografica": "", -->
+<!--         "descriptor": "", -->
+<!-- 	"lugar_de_impresion": "", -->
+<!--         "resumen": "", -->
+<!-- 	"isbn": "", -->
+<!-- 	"localizacion": "", -->
+<!-- 	"QUERY_OPERATOR": "", -->
+
+<!-- 	//para las revistas -->
+         
+
+
+<!-- 	//para las tesis -->
+
+
+
+<!-- 	//para los Documentos Digitales -->
+
+<!--         //para almacenar el valor del indice en la busqueda avanzada -->
+<!--   "selectedIndex": "", -->
+  
+<!--   //para el spinner en la busqueda -->
+<!--   loading_state: false , -->
+
+<!--     } -->
+
+<!--     this.tituloUpdated = this.tituloUpdated.bind(this) ; -->
+<!--     this.autorUpdated = this.autorUpdated.bind(this) ; -->
+<!--     this.autor2Updated = this.autor2Updated.bind(this) ; -->
+<!--     this.autor3Updated = this.autor3Updated.bind(this) ; -->
+<!--     this.editorialUpdated = this.editorialUpdated.bind(this) ; -->
+<!--     this.signaturaUpdated = this.signaturaUpdated.bind(this) ; -->
+<!--     this.descriptorUpdated = this.descriptorUpdated.bind(this) ; -->
+<!--     this.resumenUpdated = this.resumenUpdated.bind(this) ; -->
+<!--     this.lugarImpresionUpdated = this.lugarImpresionUpdated.bind(this) ; -->
+<!--     this.isbnUpdated = this.isbnUpdated.bind(this) ; -->
+<!--     this.localizacionUpdated = this.localizacionUpdated.bind(this) ; -->
+<!--     this.queryOpUpdated = this.queryOpUpdated.bind(this) ; -->
+<!--     this.selectIndex = this.selectIndex.bind(this) ; -->
+<!--     this.submitBiblioData =  this.submitBiblioData.bind(this) ; -->
+   
+<!-- } -->
+
+
+<!--     tituloUpdated(e){ -->
+<!-- 	const {value} = e.target ; -->
+<!-- 	this.setState({titulo: value}); -->
+
+<!--     } -->
+
+<!--     autorUpdated(e){ -->
+<!-- 	const {value} = e.target ; -->
+<!-- 	this.setState({autor: value}); -->
+
+<!--     } -->
+
+<!--     autor2Updated(e){ -->
+<!-- 	const {value} = e.target ; -->
+<!-- 	this.setState({autor2: value}); -->
+
+<!--     } -->
+
+<!--     autor3Updated(e){ -->
+<!-- 	const {value} = e.target ; -->
+<!-- 	this.setState({autor3: value}); -->
+
+<!--     }     -->
+
+<!--     editorialUpdated(e){ -->
+<!-- 	const {value} = e.target ; -->
+<!-- 	this.setState({editorial: value}); -->
+
+<!--     } -->
+
+<!--     signaturaUpdated(e){ -->
+<!-- 	const {value} = e.target ; -->
+<!-- 	this.setState({signatura_topografica: value}); -->
+
+<!--     } -->
+
+<!--     descriptorUpdated(e){ -->
+<!-- 	const {value} = e.target ; -->
+<!-- 	this.setState({descriptor: value}); -->
+
+<!--     } -->
+    
+
+<!--     lugarImpresionUpdated(e){ -->
+<!-- 	const {value} = e.target ; -->
+<!-- 	this.setState({lugar_de_impresion: value}); -->
+
+<!--     } -->
+
+<!--     resumenUpdated(e){ -->
+<!-- 	const {value} = e.target ; -->
+<!-- 	this.setState({resumen: value}); -->
+
+<!--     } -->
+
+<!--     isbnUpdated(e){ -->
+<!-- 	const {value} = e.target ; -->
+<!-- 	this.setState({isbn: value}); -->
+
+<!--     } -->
+
+<!--     localizacionUpdated(e){ -->
+<!-- 	const {value} = e.target ; -->
+<!-- 	this.setState({localizacion: value}); -->
+
+<!--     } -->
+
+<!--     queryOpUpdated(e){ -->
+<!-- 	const {value} = e.target ; -->
+<!-- 	this.setState({QUERY_OPERATOR: value}); -->
+
+<!--     }     -->
+
+
+<!--     selectIndex(e){ -->
+<!-- 	const {value} = e.target ; -->
+<!-- 	this.setState({ selectedIndex: value}); -->
+<!--     } -->
+    
+
+<!--     submitBiblioData(e){ -->
+<!--   e.preventDefault(); -->
+  
+<!--   this.setState({loading_state: true}) ; -->
+
+<!--   const { titulo } = this.state ; -->
+<!-- 	const { autor } = this.state ; -->
+<!--   const { autor2 } = this.state ; -->
+<!--   const { autor3 } = this.state ; -->
+<!--   const { editorial } = this.state ; -->
+<!--   const { isbn } = this.state ; -->
+<!-- 	const { signatura_topografica } = this.state ; -->
+<!-- 	const { descriptor } = this.state ; -->
+<!--   const { lugar_de_impresion } = this.state ; -->
+<!--   const { localizacion } = this.state ; -->
+<!--   const { QUERY_OPERATOR } = this.state ;  -->
+<!--   const { selectedIndex } = this.state ; -->
+  
+	
+<!-- 	const { onSubmitBiblioData } = this.props; -->
+
+
+<!--   let queryObj = { -->
+<!--     selectedIndex: this.state.selectedIndex , -->
+<!--     titulo: this.state.titulo , -->
+<!--     autor : this.state.autor , -->
+<!--     autor2 : this.state.autor2 , -->
+<!--     autor3 : this.state.autor3 , -->
+<!--     editorial: this.state.editorial , -->
+<!--     isbn: this.state.isbn, -->
+<!--     signatura_topografica: this.state.signatura_topografica , -->
+<!--     descriptor: this.state.descriptor , -->
+<!--     localizacion: this.state.localizacion , -->
+<!--     lugar_de_impresion: this.state.lugar_de_impresion , -->
+    
+
+<!--     QUERY_OPERATOR: this.state.QUERY_OPERATOR  -->
+<!-- } -->
+
+<!--   onSubmitBiblioData(queryObj); -->
+<!--   } -->
+
+ 
+<!-- render(){ -->
+  
+<!-- return( -->
+
+
+      <!-- <LoadingOverlay -->
+      <!-- active={this.state.loading_state} -->
+      <!-- spinner -->
+      <!-- text='Buscando...' -->
+      <!-- > --> 
+
+  <!--         <\!-- <Tabs onSelect={{"event": "this.props.SearchTypeDef"}}>  -\-> -->
+
+  <!-- 	    <div className="forms-busqueda"> -->
+  <!-- 	<div className="subHeader">	       -->
+  <!-- 	  <\!-- <TabList style={{ "marginTop": "-58px" }}> -\-> -->
+  <!-- 	    <Tab > -->
+  <!-- 		<div className="tabTitle"> -->
+  <!-- 		  BUSQUEDA SIMPLE -->
+  <!-- 		</div>   -->
+  <!-- 	      </Tab> -->
+  <!-- 	      <Tab> -->
+  <!-- 		<div className="tabTitle"> -->
+  <!-- 		  BUSQUEDA AVANZADA -->
+  <!-- 		</div>   -->
+  <!-- 	      </Tab> -->
+  <!-- 	    </TabList> -->
+  <!--       </div> -->
+	    
+  <!--     <div className="subHeaderOrnamentFirst"></div> -->
+  <!--       <div className="subHeaderOrnamentSecond"></div> -->
+  <!--       <br /> -->
+
+  <!--      <TabPanel>	 -->
+  <!--      <form className="BasicSearch"  onSubmit={this.submitBiblioData}> -->
+
+  <!-- 	 <div className="row"> -->
+  <!-- 	   <div form-group-col col-md-6>    -->
+  <!--            <div className="form-group"> -->
+  <!--              <input type="text" name="inputTitulo" placeholder="Título" value={this.state.titulo}  -->
+  <!-- 		      onInput={this.tituloUpdated}/> -->
+  <!--              <br/> -->
+  <!--              <input type="text" name="inputAutor" placeholder="Autor" value={this.state.autor} -->
+  <!-- 		      onInput={this.autorUpdated}/> -->
+  <!--              <br/>  -->
+  <!--            </div>    -->
+	     
+  <!--            <div className="form-group"> -->
+  <!--              <input type="text" name="inputEditorial" placeholder="Editorial" value={this.state.editorial} -->
+  <!-- 		      onInput={this.editorialUpdated}/> -->
+  <!--              <br/> -->
+  <!--              <input type="text" name="inputSignatura" placeholder="Signatura" value={this.state.signatura_topografica} -->
+  <!-- 		      onInput={this.signaturaUpdated}/> -->
+  <!--              <br/> -->
+  <!--              <input type="text" name="inputDescriptor" placeholder="Descriptor" value={this.state.descriptor} -->
+  <!-- 		      onInput={this.descriptorUpdated}/> -->
+  <!--              <br/> -->
+  <!--            </div> -->
+  <!-- 	   </div> -->
+	
+  <!-- 	   <div className="radio-group col-md-4 "> -->
+  <!--            <p>Defina el criterio de busqueda segun su elección.</p>	    -->
+  <!-- 	     <br/> -->
+  <!-- 	     <input type="radio" id="AND_OP_CHOICE"  name="contact" value="AND" onChange={this.queryOpUpdated}/> -->
+  <!-- 	     <br/> -->
+  <!-- 	     <label htmlFor="AND_OP_CHOICE">Buscar usando todos los términos</label> -->
+  <!-- 	     <br/> -->
+  <!-- 	     <input type="radio" id="OR_OP_CHOICE" name="contact" checked="OR" value="OR" onChange={this.queryOpUpdated} /> -->
+  <!-- 	     <br/> -->
+  <!-- 	     <label htmlFor="OR_OP_CHOICE">Buscar usando al menos un término</label> -->
+  <!-- 	   </div> -->
+  <!-- 	   </div> -->
+
+	
+	
+  <!--       <div className="form-group"> -->
+  <!--                  <button type="submit" className="btn btn-common" value="">  -->
+  <!--                   <i className="fa fa-search" /> -->
+  <!--                     Buscar -->
+  <!--                  </button>   -->
+  <!--       </div> -->
+
+  <!--      </form> -->
+  <!--      </TabPanel> -->
+
+  <!--             <TabPanel>	 -->
+  <!-- 		<form className="AdvancedSearch"  onSubmit={this.submitBiblioData}> -->
+
+  <!-- 		  <div className="form-group"> -->
+  <!-- 		    <div className="index-selection col-md-3 col-sm-12"> -->
+  <!-- 		    <label htmlFor="choice">Tipo de Recurso</label> -->
+  <!-- 		    <br/> -->
+  <!-- 		    <select name="choice" onChange={this.selectIndex} className="search-index-control"> -->
+  <!-- 		      <option value="opac_libros" selected>Libros</option> -->
+  <!-- 		      <option value="opac_articulos_revistas">Artículos de Revistas</option> -->
+  <!-- 		      <option value="opac_tesis">Tesis y Tesinas</option> -->
+  <!-- 		      <option value="opac_docs_dig">Documentos Digitales</option> -->
+  <!-- 		    </select> -->
+  <!-- 		    </div> -->
+  <!-- 		  </div> -->
+  <!-- 		  <br/> -->
+		 
+		  
+  <!--       <div className="for-group-container row">  -->
+  <!--       <div className="form-group col-md-3"> -->
+  <!--       <input type="text" name="inputTitulo" placeholder="Título" value={this.state.titulo}  -->
+  <!--       onInput={this.tituloUpdated}/> -->
+  <!--       <br/> -->
+  <!--       <input type="text" name="inputAutor" placeholder="Autor" value={this.state.autor} -->
+  <!--       onInput={this.autorUpdated}/> -->
+  <!--       <br/> -->
+  <!-- 	<input type="text" name="inputAutor2" placeholder="Autor2" value={this.state.autor2} -->
+  <!--       onInput={this.autor2Updated}/> -->
+  <!--       <br/> -->
+  <!-- 	<input type="text" name="inputAutor3" placeholder="Autor3" value={this.state.autor3} -->
+  <!--       onInput={this.autor3Updated}/> -->
+  <!--       <br/> -->
+  <!--       </div>    -->
+     
+  <!--       <div className="form-group col-md-3"> -->
+  <!--       <input type="text" name="inputEditorial" placeholder="Editorial" value={this.state.editorial} -->
+  <!--       onInput={this.editorialUpdated}/> -->
+  <!--       <br/> -->
+  <!--       <input type="text" name="inputSignatura" placeholder="Signatura" value={this.state.signatura_topografica} -->
+  <!--       onInput={this.signaturaUpdated}/> -->
+  <!--       <br/> -->
+  <!--       <input type="text" name="inputDescriptor" placeholder="Descriptor" value={this.state.descriptor} -->
+  <!--       onInput={this.descriptorUpdated}/> -->
+  <!--       <br/> -->
+
+  <!-- 	<input type="text" name="inputLugarImpresion" placeholder="Lugar de Impresion" value={this.state.lugar_de_impresion} -->
+  <!--       onInput={this.lugarImpresionUpdated}/> -->
+  <!--       <br/> -->
+  <!--       </div> -->
+
+	
+
+  <!--       <div className="form-group col-md-3"> -->
+  <!-- 	  	<input type="text" name="inputResumen" placeholder="Resumen" value={this.state.resumen} -->
+  <!--       onInput={this.resumenUpdated}/> -->
+  <!--       <br/> -->
+
+  <!-- 	<input type="text" name="inputIsbn" placeholder="ISBN" value={this.state.isbn} -->
+  <!--       onInput={this.isbnUpdated}/> -->
+  <!--       <br/> -->
+
+  <!-- 	<input type="text" name="inputLocalizacion" placeholder="Localización" value={this.state.localizacion} -->
+  <!--       onInput={this.localizacionUpdated}/> -->
+  <!--       <br/> -->
+  <!-- 	</div> -->
+
+  <!-- 	</div> -->
+  <!--       <br/> -->
+  <!-- 	<br/> -->
+  <!--       <div className="form-group"> -->
+  <!--                  <button type="submit" className="btn btn-common" value="">  -->
+  <!--                   <i className="fa fa-search" /> -->
+  <!--                   Buscar -->
+  <!--                  </button>   -->
+  <!--       </div> -->
+  <!-- 	</form> -->
+  <!--       </TabPanel> -->
+  <!-- 	  </div> -->
+	  
+  <!-- 	  </Tabs> -->
+
+
+    
+<hr>
+
+
+
+    <ul class="nav nav-tabs flex flex-col md:flex-row flex-wrap list-none border-b-0 pl-0 mb-4" id="tabs-tab"
+  role="tablist">
+  <li class="nav-item" role="presentation">
+    <a href="#tabs-home" class="
+      nav-link
+      block
+      font-medium
+      text-xs
+      leading-tight
+      uppercase
+      border-x-0 border-t-0 border-b-2 border-transparent
+      px-6
+      py-3
+      my-2
+      hover:border-transparent hover:bg-gray-100
+      focus:border-transparent
+      active
+    " id="tabs-home-tab" data-bs-toggle="pill" data-bs-target="#tabs-home" role="tab" aria-controls="tabs-home"
+      aria-selected="true">Busqueda</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a href="#tabs-profile" class="
+      nav-link
+      block
+      font-medium
+      text-xs
+      leading-tight
+      uppercase
+      border-x-0 border-t-0 border-b-2 border-transparent
+      px-6
+      py-3
+      my-2
+      hover:border-transparent hover:bg-gray-100
+      focus:border-transparent
+    " id="tabs-profile-tab" data-bs-toggle="pill" data-bs-target="#tabs-profile" role="tab"
+      aria-controls="tabs-profile" aria-selected="false">Busqueda Avanzada</a>
+  </li>
+
+  
+</ul>
+
+<div class="tab-content" id="tabs-tabContent">
+  <div class="tab-pane fade show active" id="tabs-home" role="tabpanel" aria-labelledby="tabs-home-tab">
+    Tab 1 content
+
+    <div class="search_wrapper"> 
+    <input class="w-80 h-px-30 border-solid border-green-900"/>
+    </div>
+
+
+    <div class="flex space-x-2 justify-center">
+      <!-- <button type="button" class="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-400 hover:text-dedalos-green hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-white active:shadow-lg transition duration-150 ease-in-out">Buscar</button> -->
+
+
+      <button type="button" class="btn btn-common inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md"> <!-- <FontAwesome.LiveView.icon name="search"  color="white"  type="regular"  class="h-4 w-4" />  --> Buscar</button>
+</div>
+    
+
+    
+  </div>
+  <div class="tab-pane fade" id="tabs-profile" role="tabpanel" aria-labelledby="tabs-profile-tab">
+    Tab 2 content
+  </div>
+  
+</div>	     	
+      
+
+	  
+
+
+  
+
+
+
+
+
+

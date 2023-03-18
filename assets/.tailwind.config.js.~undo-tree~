@@ -1,0 +1,25 @@
+(undo-tree-save-format-version . 1)
+"2321b37edc77520f561c7f01c9c2854c43af2e29"
+[nil nil nil nil (25594 62 880408 268000) 0 nil]
+([nil nil ((733 . 735) (842 . 843) (t 25593 21814 909264 711000)) nil (25594 62 880406 871000) 0 nil])
+([nil nil ((845 . 852)) nil (25594 62 880404 496000) 0 nil])
+([nil nil ((852 . 859)) nil (25594 62 880402 540000) 0 nil])
+([nil nil ((859 . 861)) nil (25594 62 880400 166000) 0 nil])
+([nil nil ((861 . 868) (860 . 862) (#("\"" 0 1 (fontified nil)) . -860) (860 . 861)) nil (25594 62 880393 600000) 0 nil])
+([nil nil ((263 . 267) (#("    " 0 4 (fontified nil)) . 262) (undo-tree-id27 . -4) (262 . 267) (#("    " 0 4 (fontified nil)) . 261) (undo-tree-id28 . -4) (260 . 266) (t 25594 62 880198 734000)) nil (25594 4145 741616 735000) 0 nil])
+([nil nil ((263 . 267) (#("    " 0 4 (fontified nil)) . 262) (262 . 266) (262 . 263)) nil (25594 4145 741612 474000) 0 nil])
+([nil nil ((nil rear-nonsticky nil 431 . 432) (nil fontified nil 410 . 432) (nil fontified nil 401 . 410) (nil fontified nil 399 . 401) (nil fontified nil 387 . 399) (nil fontified nil 379 . 387) (nil fontified nil 370 . 379) (nil fontified nil 368 . 370) (nil fontified nil 343 . 368) (nil fontified nil 335 . 343) (nil fontified nil 326 . 335) (nil fontified nil 322 . 326) (nil fontified nil 307 . 322) (nil fontified nil 265 . 307) (265 . 432)) nil (25594 4145 741609 121000) 0 nil])
+([nil nil ((509 . 512) (489 . 491) (506 . 507)) nil (25594 4145 741605 349000) 0 nil])
+([nil nil ((nil rear-nonsticky nil 620 . 621) (nil fontified nil 612 . 621) (nil fontified nil 610 . 612) (nil fontified nil 598 . 610) (nil fontified nil 590 . 598) (nil fontified nil 581 . 590) (nil fontified nil 579 . 581) (nil fontified nil 554 . 579) (nil fontified nil 546 . 554) (nil fontified nil 537 . 546) (nil fontified nil 533 . 537) (nil fontified nil 518 . 533) (nil fontified nil 512 . 518) (512 . 621)) nil (25594 4145 741603 44000) 0 nil])
+([nil current ((#("
+  theme: {
+	extend: {
+	    	colors: {
+		    'dedalos-green':   '#343A40',
+		    'light-golden-rod-yellow': '#FAFAD2',
+		    'whitesmoke': '#F5F5F5'
+		}
+	    
+    },
+  },  " 0 1 (fontified t) 1 3 (fontified t) 3 45 (fontified t) 45 60 (fontified t face font-lock-string-face) 60 64 (fontified t) 64 73 (fontified t face font-lock-string-face) 73 81 (fontified t) 81 106 (fontified t face font-lock-string-face) 106 108 (fontified t) 108 117 (fontified t face font-lock-string-face) 117 125 (fontified t) 125 137 (fontified t face font-lock-string-face) 137 139 (fontified t) 139 148 (fontified t face font-lock-string-face) 148 169 (fontified t) 169 170 (fontified t rear-nonsticky t) 170 172 (fontified t)) . -262) (undo-tree-id0 . -172) (undo-tree-id1 . -1) (undo-tree-id2 . -1) (undo-tree-id3 . -12) (undo-tree-id4 . -12) (undo-tree-id5 . -23) (undo-tree-id6 . -23) (undo-tree-id7 . -39) (undo-tree-id8 . -39) (undo-tree-id9 . -166) (undo-tree-id10 . -166) (undo-tree-id11 . -159) (undo-tree-id12 . -159) (undo-tree-id13 . -153) (undo-tree-id14 . -153) (undo-tree-id15 . -149) (undo-tree-id16 . -149) (undo-tree-id17 . -119) (undo-tree-id18 . -119) (undo-tree-id19 . -75) (undo-tree-id20 . -75) (undo-tree-id21 . -166) (undo-tree-id22 . -3) (undo-tree-id23 . -3) (undo-tree-id24 . -39) (undo-tree-id25 . -172) (undo-tree-id26 . -166) 434) nil (25594 4145 741595 430000) 0 nil])
+nil

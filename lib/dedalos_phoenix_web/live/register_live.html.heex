@@ -1,0 +1,147 @@
+import React, { Component} from 'react' ;
+import axios from 'axios' ;
+import Opac from './vrlOpac' ;
+
+
+export default class Register extends Component{
+
+    constructor(props){
+        super(props);
+        this.state = {
+            loading: false ,
+            redirect: false ,
+            "nombre": "",
+            "apellidos": "",
+            "nombre_usuario": "",
+            "password": "",  
+        }
+    this.firstnameUpdated = this.firstnameUpdated.bind(this) ;
+    this.lastnameUpdated = this.lastnameUpdated.bind(this) ;
+    this.usernameUpdated = this.usernameUpdated.bind(this) ;
+    this.passwordUpdated = this.passwordUpdated.bind(this) ;
+    this.registerStream = this.registerStream.bind(this) ;
+
+    
+    }
+
+    firstnameUpdated(e){
+        const {value} = e.target ;
+        this.setState({ nombre: value}); 
+    }
+
+    lastnameUpdated(e){
+        const {value} = e.target ;
+        this.setState({ apellidos: value});
+    }
+
+    
+    usernameUpdated(e){
+        const {value} = e.target ;
+        this.setState({ nombre_usuario: value});
+    }
+
+
+    passwordUpdated(e){
+        const {value} = e.target ;
+        this.setState({ password: value});
+    }
+
+
+    async registerStream(e){
+        e.preventDefault();
+
+        const { nombre_usuario } = this.state ;        
+        const { password } = this.state ;
+
+        
+        const base = "http://biblioteca.ccpadrevarela.org";
+        const formData = new FormData();
+        formData.set("firstname", this.state.nombre);
+        formData.set("lastname", this.state.apellidos);
+        formData.set("username", this.state.nombre_usuario);
+        formData.set("password", this.state.password);
+    
+        const registration = await axios({
+          method: "POST",
+          url: `${base}/auth/users/`,
+          data: formData,
+          config: {
+            headers: { "Content-Type": "multipart/form-data",}
+          }
+        }); 
+
+
+        const authorization = await axios({
+            method: "POST",
+            url: `${base}/auth/token/login/`,
+            data: formData,
+            config: {
+              headers: { "Content-Type": "multipart/form-data" }
+            }
+          });
+      
+          localStorage.setItem("token", authorization.data.auth_token);
+          localStorage.setItem("saludo", "Hola " + this.state.nombre_usuario);
+      
+          await this.setState({
+            loading: false ,
+            redirect: true ,
+          });
+      
+        //  this.props.history.push("/opac");
+        }
+      
+
+        
+        
+
+     
+
+    render(){
+
+      const { redirect } = this.state;
+
+      if (redirect) {
+        return <Opac isAuthenticated="true" />;
+      }
+
+        return(
+           /* <div className="form-busqueda-simple">  */
+            <div className="registerForm">
+    <form onSubmit={this.submitBiblioData}>
+        <div className="subHeader" ><h3>Formulario de Registro</h3></div>
+        <br />
+
+        <div className="form-group">
+        <input type="text" name="inputNombre" placeholder="Nombre" value={this.state.nombre} 
+        onInput={this.firstnameUpdated}/>
+        <br/>
+        <input type="text" name="inputApellidos" placeholder="Apellidos" value={this.state.apellidos}
+        onInput={this.lastnameUpdated}/>
+        <br/> 
+        </div>   
+     
+        <div className="form-group">
+        
+        <br/>
+        <input type="text" name="inputNombreUsuario" placeholder="nombre de usuario" value={this.state.nombre_usuario}
+        onInput={this.usernameUpdated}/>
+        <br/>
+        <input type="password" name="inputPassword" placeholder="password" value={this.state.password}
+        onInput={this.passwordUpdated}/>
+        <br/>
+        </div>
+
+        <div className="form-group">
+                   <button onClick={this.registerStream} type="submit" className="btn btn-common" value=""> 
+                    <i className="fa fa-book" />
+                    Registrarse
+                   </button>  
+        </div>
+
+        </form>
+        </div>
+        )
+    }
+
+}
