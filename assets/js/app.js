@@ -30,26 +30,15 @@ let hooks = {}
 
 hooks.saveLoginToken = {
     mounted() {
-	localStorage.clear(),
     	this.handleEvent("save_login_token", ({payload}) => {
            localStorage.setItem("login_token", payload)    
-	}),
-
-	tkn = localStorage.getItem("login_token")
-	console.log(tkn)
-	this.pushEvent("check_login_token", tkn)
 	    
-	},
+   })	
+
+
+
   },    
 };
-
-
-// hooks.checkLoginToken = {
-//     mounted() {
-//         console.log(localStorage.getItem("login_token"))   
-//     }
-    
-// };
 
 
 
