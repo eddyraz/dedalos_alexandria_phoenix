@@ -23,11 +23,18 @@ defmodule DedalosPhoenixWeb.Router do
     live "/", AppLive
     live "/home", HomeLive
     live "/about", AboutLive
-    live "/opac", OpacLive
+
+
+    live_session(:session) do
+      live "/login", LoginLive
+      live "/opac", OpacLive
+    end
+     
+    
     live "/boletines", BoletinLive
     live "/chat", HomeLive
     live "/results", ResultsTableLive
-    live "/login", LoginLive
+    
     live "/logout", LogoutLive
     live "/register", RegisterLive
     live "/contact", ContactLive
