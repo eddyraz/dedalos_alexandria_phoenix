@@ -13,6 +13,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
        query_params: params,
        filtered_results: []
      )}
+    |> IO.inspect()
   end
 
   def handle_params(params, _uri, socket) do
@@ -67,21 +68,21 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     |> Jason.decode!()
     |> Map.fetch("hits")
     |> elem(1)
-    |> tap(&build_total_results_map(&1["total"], socket)) 
+    |> tap(&get_total_results(&1))
     |> Map.fetch("hits")
     |> elem(1)
   end
 
-  def build_total_results_map(tr,socket) do
+  @impl true
+  def get_total_results(tr) do
+     tr["total"]
+     |> tap(&IO.inspect(&1))
+  end
 
-    {:noreply ,assign(socket, results_qty: 5)}
-   end
-  
   def get_total_pages(assigns) do
     (assigns.results_qty / assigns.page_size)
     |> Float.ceil()
     |> round()
-    
   end
 
   def paginate_response(resp_map, config) do
@@ -152,8 +153,18 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
       type="button"
       class="inline-block ml-4 my-10 hover:bg-gray-200 hover:text-light-golden-rod-yellow px-6 py-2.5 bg-gray-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-900 hover:shadow-lg focus:bg-gray-900 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-900 active:shadow-lg transition duration-150 ease-in-out"
     >
-      Buscar de nuevo
+      Volver a Buscar
     </button>
+   
+
+    <div class="localResults mx-4 py-1">
+    <h4>  Se han obtenido #{i} resultados </h4>
+    </div>
+
+    <div class="remoteResults mx-4 py-1">
+   <h4>   Para resultados en otras bibliotecas pulse 
+   <a href="http://biblioteca.ccpafrevarela.org:4007/results/#RemoteTable">aquí</a>  </h4>
+    </div>
 
     <div class="flex justify-left">
       <div class="ml-4 mb-3 xl:w-96">
