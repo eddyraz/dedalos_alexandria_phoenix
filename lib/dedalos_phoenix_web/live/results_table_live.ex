@@ -8,10 +8,9 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     {:ok,
      assign(socket,
        page_number: 1,
-       page_size: 2,
+       page_size: 10,
        results_qty: 20,
        query_params: params,
-       #       search_index: "",
        filtered_results: []
      )}
   end
@@ -68,14 +67,21 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     |> Jason.decode!()
     |> Map.fetch("hits")
     |> elem(1)
+    |> tap(&build_total_results_map(&1["total"], socket)) 
     |> Map.fetch("hits")
     |> elem(1)
   end
 
+  def build_total_results_map(tr,socket) do
+
+    {:noreply ,assign(socket, results_qty: 5)}
+   end
+  
   def get_total_pages(assigns) do
     (assigns.results_qty / assigns.page_size)
     |> Float.ceil()
     |> round()
+    
   end
 
   def paginate_response(resp_map, config) do
@@ -89,27 +95,16 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
           is_map(v) -> to_keyword_list(v)
           true -> v
         end
+
       {String.to_atom("#{k}"), v}
     end)
   end
 
   @impl true
   def handle_event("page_change", params, socket) do
-    socket = socket
-    |> assign(
-       socket,
-       %{
-          page_number: params["page_number"] |> String.to_integer()
-        }
-    )
-    {:noreply, assign(socket, params: params)}
-    |> IO.inspect()
-
-
-
+    {:noreply, assign(socket, page_number: params["page_number"] |> String.to_integer())}
   end
 
-  
   def fa_icon_generator(id) do
     case id do
       "opac_libros" -> %{name: "book", label_text: "Libro"}
@@ -137,15 +132,14 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
   end
 
   def render(assigns) do
-    # results =
-    #   process_request(assigns.query_params)
-    #   |> paginate_respose(%{page: assigns.page_number, page_size: assigns.page_size})
+    results =
+      process_request(assigns.query_params, @socket)
+      |> paginate_response(%{page: assigns.page_number, page_size: assigns.page_size})
 
-    # filtered_results =
-    #   results
-    #   |> Enum.map(fn x -> x |> to_keyword_list() end)
+    filtered_results =
+      results
+      |> Enum.map(fn x -> x |> to_keyword_list() end)
 
-    
     ~H"""
     <div>
       <%= live_component(@socket, DedalosPhoenixWeb.NavbarLive) %>
@@ -204,7 +198,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
           </tr>
         </thead>
         <tbody>
-          <%= for y <- @filtered_results do %>
+          <%= for y <- filtered_results do %>
             <tr class="border-b-gray-300 even:bg-white odd:bg-gray-200 hover:bg-gray-600 hover:text-light-golden-rod-yellow">
               <td class="p-2 border-r border-gray-300"><%= y[:_source][:signatura] %></td>
               <td class="p-2 border-r border-gray-300">
