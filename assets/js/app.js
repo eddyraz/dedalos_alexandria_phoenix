@@ -31,7 +31,7 @@ let hooks = {}
 hooks.saveLoginToken = {
     mounted() {
     	this.handleEvent("save_login_token", ({payload}) => {
-           localStorage.setItem("login_token", payload)    
+           sessionStorage.setItem("login_token", payload)    
 	    
    })	
 
