@@ -1,5 +1,5 @@
 (undo-tree-save-format-version . 1)
-"2f4a6306ec7995a52f9c139ec69fbd057dedf46b"
+"18815fe45b1db80ba1f1f18755af16642809a81a"
 [nil nil nil nil (25607 38240 542301 162000) 0 (:visualizer [5 0 1 #<marker in no buffer>])]
 ([nil nil ((2068 . 2069) (t 25601 32032 792007 666000)) nil (25614 21806 118078 396000) 0 (:visualizer [5 0 1 #<marker in no buffer>])])
 ([nil nil ((618 . 619) (t 25614 21806 117745 405000)) nil (25614 21815 36367 598000) 0 (:visualizer [5 0 1 #<marker in no buffer>])])
@@ -934,7 +934,7 @@ nil
 ([nil nil ((2091 . 2092) (t 25623 43007 175602 208000)) nil (25623 43011 472468 995000) 0 nil])
 ([nil nil ((#("," 0 1 (fontified t)) . -2092) (undo-tree-id1605 . -1) (undo-tree-id1606 . -1) 2093 (t 25623 43011 491519 148000)) nil (25623 43018 801825 251000) 0 nil])
 ([nil nil ((#("    socket = socket |> assign(results_qty:  5)" 0 4 (fontified t) 4 10 (fontified t face font-lock-variable-name-face) 10 29 (fontified t) 29 30 (fontified t) 30 42 (fontified t face elixir-atom-face) 42 43 (fontified t) 43 44 (fontified t) 44 45 (fontified t rear-nonsticky t) 45 46 (fontified t)) . 2049) (undo-tree-id1607 . -30) (undo-tree-id1608 . -4) (undo-tree-id1609 . -46) (undo-tree-id1610 . -46) (t 25623 43018 819378 39000)) nil (25623 43039 41081 521000) 0 nil])
-([nil nil ((#("#" 0 1 (fontified t syntax-table (2) elixir-interpolation (nil #<marker at 1991 in results_table_live.ex> #<marker at 2003 in results_table_live.ex> #<marker at 1991 in results_table_live.ex> #<marker at 2003 in results_table_live.ex>))) . -1995) (undo-tree-id1617 . -1) (undo-tree-id1618 . -1) (undo-tree-id1619 . -1) (#(" " 0 1 (fontified t face font-lock-comment-delimiter-face)) . -1996) (undo-tree-id1620 . -1) (undo-tree-id1621 . -1) (undo-tree-id1622 . -1) 1997 (t 25623 43039 58987 767000)) nil (25623 46388 291658 533000) 0 nil])
+([nil nil ((#("#" 0 1 (fontified t syntax-table (2) elixir-interpolation (nil #<marker at 1983 in results_table_live.ex> #<marker at 1983 in results_table_live.ex> #<marker at 1983 in results_table_live.ex> #<marker at 1983 in results_table_live.ex>))) . -1995) (undo-tree-id1617 . -1) (undo-tree-id1618 . -1) (undo-tree-id1619 . -1) (#(" " 0 1 (fontified t face font-lock-comment-delimiter-face)) . -1996) (undo-tree-id1620 . -1) (undo-tree-id1621 . -1) (undo-tree-id1622 . -1) 1997 (t 25623 43039 58987 767000)) nil (25623 46388 291658 533000) 0 nil])
 ([nil nil ((#("
 " 0 1 (fontified t)) . 2047) (undo-tree-id1614 . -1) (undo-tree-id1615 . -1) (undo-tree-id1616 . -1)) nil (25623 46388 291639 555000) 0 nil])
 ([nil nil ((#("    tr" 0 4 (fontified t) 4 6 (fontified t)) . 2047)) nil (25623 46388 291630 396000) 0 nil])
@@ -1395,5 +1395,64 @@ def build_total_results_map(tr, socket) do
 ([nil nil ((#("o" 0 1 (fontified t face font-lock-string-face)) . -4449) (undo-tree-id2768 . -1) (#("p" 0 1 (fontified t face font-lock-string-face)) . -4450) (undo-tree-id2769 . -1) (#("a" 0 1 (fontified t face font-lock-string-face)) . -4451) (undo-tree-id2770 . -1) (#("c" 0 1 (fontified t face font-lock-string-face)) . -4452) (undo-tree-id2771 . -1) 4453) nil (25624 40958 444746 686000) 0 nil])
 ([nil nil ((4449 . 4456)) nil (25624 40958 444714 656000) 0 nil])
 ([nil nil ((4339 . 4340) (t 25624 40958 466760 231000)) nil (25624 40974 709592 839000) 0 nil])
-([nil current ((nil rear-nonsticky nil 4348 . 4349) (nil fontified nil 4340 . 4349) (4340 . 4349)) nil (25624 40974 709583 782000) 0 nil])
+([nil nil ((nil rear-nonsticky nil 4348 . 4349) (nil fontified nil 4340 . 4349) (4340 . 4349)) nil (25624 40974 709583 782000) 0 nil])
+([nil nil ((#("#" 0 1 (elixir-interpolation (t #<marker at 4327 in results_table_live.ex> #<marker at 4327 in results_table_live.ex> #<marker at 4327 in results_table_live.ex> #<marker at 4327 in results_table_live.ex>) fontified t face font-lock-variable-name-face)) . -4276) (undo-tree-id2772 . -1) (#("{" 0 1 (fontified t face font-lock-variable-name-face)) . -4277) (undo-tree-id2773 . -1) (#("i" 0 1 (fontified t face font-lock-variable-name-face)) . -4278) (undo-tree-id2774 . -1) (#("}" 0 1 (fontified t face font-lock-variable-name-face)) . -4279) (undo-tree-id2775 . -1) (undo-tree-id2776 . 1) (undo-tree-id2777 . -1) 4280 (t 25624 40974 738811 379000)) nil (25624 41194 236736 953000) 0 nil])
+([nil nil ((4276 . 4285)) nil (25624 41194 236722 65000) 0 nil])
+([nil nil ((4285 . 4288)) nil (25624 41194 236718 87000) 0 nil])
+([nil nil ((4276 . 4279) (t 25624 41194 247523 533000)) nil (25624 41203 919968 384000) 0 nil])
+([nil nil ((#("@results_qty" 0 12 (fontified t face font-lock-string-face)) . 4279) (undo-tree-id2778 . -12) (undo-tree-id2779 . -12) (undo-tree-id2780 . -12) 4291) nil (25624 41203 919963 44000) 0 nil])
+([nil nil ((nil rear-nonsticky nil 4289 . 4290) (nil fontified nil 4278 . 4290) (4278 . 4290)) nil (25624 41203 919936 283000) 0 nil])
+([nil nil ((#("@" 0 1 (fontified t face font-lock-variable-name-face)) . -4278) (undo-tree-id2781 . -1) 4279 (t 25624 41203 975555 908000)) nil (25624 41207 841998 76000) 0 nil])
+([nil nil ((4278 . 4279) (t 25624 41207 855568 837000)) nil (25624 41277 477880 577000) 0 nil])
+([nil nil ((4279 . 4284)) nil (25624 41277 477878 594000) 0 nil])
+([nil nil ((#("#" 0 1 (fontified t elixir-interpolation (t #<marker at 4327 in results_table_live.ex> #<marker at 4327 in results_table_live.ex> #<marker at 4327 in results_table_live.ex> #<marker at 4327 in results_table_live.ex>) face font-lock-variable-name-face)) . -4276) (undo-tree-id2783 . -1) (undo-tree-id2784 . -1) (#("{" 0 1 (fontified t face font-lock-variable-name-face)) . -4277) (undo-tree-id2785 . -1) (undo-tree-id2786 . -1) (#("a" 0 1 (fontified t face font-lock-variable-name-face)) . -4278) (undo-tree-id2787 . -1) (#("s" 0 1 (fontified t face font-lock-variable-name-face)) . -4279) (undo-tree-id2788 . -1) (#("s" 0 1 (fontified t face font-lock-variable-name-face)) . -4280) (undo-tree-id2789 . -1) (#("i" 0 1 (fontified t face font-lock-variable-name-face)) . -4281) (undo-tree-id2790 . -1) (#("g" 0 1 (fontified t face font-lock-variable-name-face)) . -4282) (undo-tree-id2791 . -1) (#("n" 0 1 (fontified t face font-lock-variable-name-face)) . -4283) (undo-tree-id2792 . -1) 4284) nil (25624 41277 477874 95000) 0 nil])
+([nil nil ((4276 . 4277)) nil (25624 41277 477856 101000) 0 nil])
+([nil nil ((4276 . 4279)) nil (25624 41277 477854 529000) 0 nil])
+([nil nil ((4292 . 4293)) nil (25624 41277 477853 106000) 0 nil])
+([nil nil ((4292 . 4294)) nil (25624 41277 477851 593000) 0 nil])
+([nil nil ((#("@" 0 1 (fontified t face font-lock-string-face)) . -4279) (undo-tree-id2782 . -1) 4280) nil (25624 41277 477848 177000) 0 nil])
+([nil nil ((4279 . 4282)) nil (25624 41277 477832 607000) 0 nil])
+([nil nil ((4282 . 4283) (t 25624 41277 507802 453000)) nil (25624 41283 496198 507000) 0 nil])
+([nil nil ((#("#" 0 1 (fontified t elixir-interpolation (t #<marker at 4327 in results_table_live.ex> #<marker at 4327 in results_table_live.ex> #<marker at 4327 in results_table_live.ex> #<marker at 4327 in results_table_live.ex>) face font-lock-variable-name-face)) . -4280) (undo-tree-id2799 . -1) (#("{" 0 1 (fontified t face font-lock-variable-name-face)) . -4281) (undo-tree-id2800 . -1) 4282 (t 25624 41283 507822 705000)) nil (25624 41289 95818 847000) 0 nil])
+([nil nil ((#("}" 0 1 (fontified t face font-lock-string-face)) . -4292) (undo-tree-id2793 . -1) (undo-tree-id2794 . -1) (undo-tree-id2795 . -1) (undo-tree-id2796 . -1) (undo-tree-id2797 . 1) (undo-tree-id2798 . -1) 4293) nil (25624 41289 95812 335000) 0 nil])
+([nil nil ((#("|> IO.inspect()" 0 3 (fontified t) 3 5 (fontified t face font-lock-type-face) 5 13 (fontified t) 13 15 (fontified t)) . 364) (undo-tree-id2801 . -15) (t 25624 41289 115841 650000)) nil (25624 41346 55014 988000) 0 nil])
+([nil nil ((1977 . 1989) (t 25624 41346 68034 962000)) nil (25625 43733 915521 566000) 0 nil])
+([nil nil ((4360 . 4523) (#("   <h4>   Para resultados en otras bibliotecas pulse 
+   <a href=\"http://biblioteca.ccpafrevarela.org:4007/results/#RemoteTable\">aquí</a>  </h4>
+" 0 10 (face font-lock-string-face) 10 53 (face font-lock-string-face) 53 54 (face font-lock-string-face) 54 65 (face font-lock-string-face) 65 128 (face font-lock-string-face) 128 129 (face font-lock-string-face) 129 132 (face font-lock-string-face) 132 133 (rear-nonsticky t face font-lock-string-face) 133 138 (face font-lock-string-face) 138 143 (face font-lock-string-face) 143 144 (rear-nonsticky t face font-lock-string-face) 144 145 (face font-lock-string-face)) . -4360) (undo-tree-id2820 . -10) (undo-tree-id2821 . -57) (undo-tree-id2822 . -53) (undo-tree-id2823 . -129) (undo-tree-id2824 . -53) (undo-tree-id2825 . -138) (4244 . 4306) (#("    <h4>  Se han obtenido <%= @results_qty %> resultados </h4>
+" 0 30 (face font-lock-string-face) 30 31 (face font-lock-string-face) 31 41 (face font-lock-string-face) 41 42 (rear-nonsticky t face font-lock-string-face) 42 45 (face font-lock-string-face) 45 62 (face font-lock-string-face) 62 63 (face font-lock-string-face)) . -4244) (undo-tree-id2826 . -42) (undo-tree-id2827 . -26) (undo-tree-id2828 . -26) (undo-tree-id2829 . -26) (undo-tree-id2830 . -26) (undo-tree-id2831 . -42) (undo-tree-id2832 . -26) (undo-tree-id2833 . -42) (undo-tree-id2834 . -26) (undo-tree-id2835 . -42) (undo-tree-id2836 . -26) (undo-tree-id2837 . -30) (undo-tree-id2838 . -42) (undo-tree-id2839 . -30) (undo-tree-id2840 . -42) (undo-tree-id2841 . -26) (#("   
+" 0 4 (face font-lock-string-face)) . -4202) (1967 . 2031) (#("     total_res = tr[\"total\"]
+     |> tap(&IO.inspect(&1))
+" 0 4 (fontified t) 4 5 (fontified t) 5 14 (fontified t face font-lock-variable-name-face) 14 19 (fontified t) 19 20 (fontified t) 20 21 (fontified t syntax-table (15) face font-lock-string-face) 21 26 (fontified t face font-lock-string-face) 26 27 (fontified t syntax-table (15) face font-lock-string-face) 27 28 (fontified t) 28 29 (fontified t) 29 34 (fontified t) 34 40 (fontified t) 40 41 (fontified t) 41 42 (fontified t face font-lock-type-face) 42 44 (fontified t face font-lock-type-face) 44 45 (fontified t) 45 52 (fontified t) 52 55 (fontified t) 55 56 (rear-nonsticky t fontified t) 56 57 (fontified t) 57 58 (fontified t)) . -1967) (undo-tree-id2842 . -57) (undo-tree-id2843 . -4) (undo-tree-id2844 . -28) (undo-tree-id2845 . -4) (undo-tree-id2846 . -28) (undo-tree-id2847 . -29) (undo-tree-id2848 . -4) (undo-tree-id2849 . -29) (undo-tree-id2850 . -29) (undo-tree-id2851 . -58) (undo-tree-id2852 . -58) (undo-tree-id2853 . -17) (undo-tree-id2854 . -17) (#("    
+" 0 4 (fontified t) 4 5 (fontified t)) . -360)) nil (25625 43733 915515 295000) 0 nil])
+([nil nil ((2030 . 2035)) nil (25625 43733 915464 230000) 0 nil])
+([nil nil ((2035 . 2050)) nil (25625 43733 915462 827000) 0 nil])
+([nil nil ((2050 . 2055)) nil (25625 43733 915461 284000) 0 nil])
+([nil nil ((2055 . 2056)) nil (25625 43733 915459 801000) 0 nil])
+([nil nil ((2065 . 2077) (2056 . 2066)) nil (25625 43733 915458 229000) 0 nil])
+([nil nil ((2077 . 2081)) nil (25625 43733 915456 265000) 0 nil])
+([nil nil ((2078 . 2087) (#("tot" 0 3 (fontified t)) . -2078) (undo-tree-id2818 . -3) (undo-tree-id2819 . -3) 2081) nil (25625 43733 915453 199000) 0 nil])
+([nil nil ((2031 . 2098) (#("    socket = socket
+    |> assign(results_qty: total_res)
+" 0 4 (fontified t) 4 10 (fontified t face font-lock-variable-name-face) 10 19 (fontified t) 19 20 (fontified t) 20 33 (fontified t) 33 34 (fontified t) 34 46 (fontified t face elixir-atom-face) 46 47 (fontified t) 47 56 (fontified t) 56 57 (fontified t) 57 58 (fontified t)) . -2031) (undo-tree-id2802 . -20) (undo-tree-id2803 . -58) (undo-tree-id2804 . -58) (undo-tree-id2805 . -58) (undo-tree-id2806 . -20) (undo-tree-id2807 . -20) (undo-tree-id2808 . -47) (undo-tree-id2809 . 2) (undo-tree-id2810 . -47) (undo-tree-id2811 . 2) (undo-tree-id2812 . -20) (undo-tree-id2813 . -57) (undo-tree-id2814 . -57) (undo-tree-id2815 . -57) (undo-tree-id2816 . -57) (undo-tree-id2817 . -57)) nil (25625 43733 915440 716000) 0 nil])
+([nil nil ((1962 . 1965) (t 25625 43733 938928 896000)) nil (25625 43758 29338 822000) 0 nil])
+([nil nil ((#("c" 0 1 (fontified t)) . -1964) (undo-tree-id2859 . -1) 1965) nil (25625 43758 29335 947000) 0 nil])
+([nil nil ((1964 . 1967)) nil (25625 43758 29332 19000) 0 nil])
+([nil nil ((#("k" 0 1 (fontified t)) . -1965) (undo-tree-id2857 . -1) (#("c" 0 1 (fontified t)) . -1966) (undo-tree-id2858 . -1) 1967) nil (25625 43758 29329 154000) 0 nil])
+([nil nil ((1965 . 1967)) nil (25625 43758 29322 792000) 0 nil])
+([nil nil ((#("e" 0 1 (fontified t)) . -1966) (undo-tree-id2856 . -1) 1967) nil (25625 43758 29319 907000) 0 nil])
+([nil nil ((1966 . 1969)) nil (25625 43758 29315 28000) 0 nil])
+([nil nil ((#("r" 0 1 (fontified t)) . -1968) (undo-tree-id2855 . -1) 1969) nil (25625 43758 29311 181000) 0 nil])
+([nil nil ((1968 . 1969)) nil (25625 43758 29294 690000) 0 nil])
+([nil nil ((1873 . 1882)) nil (25625 43758 29286 886000) 0 nil])
+([nil nil ((#("|> tap(&IO.inspect(&1))" 0 7 (fontified t) 7 10 (fontified t face font-lock-type-face) 10 23 (fontified t)) . 2023) (undo-tree-id2868 . -23) (undo-tree-id2869 . -23) (undo-tree-id2870 . 1) (undo-tree-id2871 . -23) (undo-tree-id2872 . 17) (undo-tree-id2873 . -7) 2046 (t 25625 43758 42529 559000)) nil (25625 45011 849208 895000) 0 nil])
+([nil nil ((2090 . 2095)) nil (25625 45011 849199 348000) 0 nil])
+([nil nil ((nil rear-nonsticky nil 2117 . 2118) (nil fontified nil 2105 . 2118) (nil fontified nil 2102 . 2105) (nil fontified nil 2095 . 2102) (2095 . 2118)) nil (25625 45011 849196 853000) 0 nil])
+([nil nil ((#(" " 0 1 (fontified t)) . 2091)) nil (25625 45011 849193 157000) 0 nil])
+([nil nil ((2091 . 2094)) nil (25625 45011 849191 453000) 0 nil])
+([nil nil ((#("      
+" 0 6 (fontified t) 6 7 (fontified t)) . 2017) (undo-tree-id2863 . -7) (undo-tree-id2864 . -7) (undo-tree-id2865 . -7) (undo-tree-id2866 . -7) (undo-tree-id2867 . -6)) nil (25625 45011 849188 809000) 0 nil])
+([nil nil ((#("
+" 0 1 (fontified t)) . 2017) (undo-tree-id2860 . -1) (undo-tree-id2861 . -1) (undo-tree-id2862 . -1)) nil (25625 45011 849178 930000) 0 nil])
+([nil current ((#("    " 0 4 (fontified nil)) . 2017) (2017 . 2021) (2017 . 2018)) nil (25625 45011 849159 234000) 0 nil])
 nil

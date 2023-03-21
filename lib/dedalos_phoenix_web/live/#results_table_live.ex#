@@ -67,15 +67,14 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     |> Jason.decode!()
     |> Map.fetch("hits")
     |> elem(1)
-    |> tap(&get_total_results(&1, socket ))
+    |> tap(&get_total_results(&1, socket))
     |> Map.fetch("hits")
     |> elem(1)
   end
 
   @impl true
-  def get_total_results(tr,socket) do
-    total_res =
-      tr["total"]
+  def get_total_results(tr, socket) do
+    total_res = tr["total"]
 
     socket =
       socket
