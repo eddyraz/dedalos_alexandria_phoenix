@@ -9,7 +9,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
      assign(socket,
        page_number: 1,
        page_size: 10,
-       results_qty: 20,
+       results_qty: 100,
        query_params: params,
        filtered_results: []
      )}
@@ -22,6 +22,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
   def get_results(params, socket) do
     results =
       process_request(params, socket)
+      |> Map.fetch!(:results_records )
       |> paginate_response(%{page: params["page_number"], page_size: params["page_size"]})
 
     socket =
@@ -32,7 +33,6 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
       )
   end
 
-  @impl true
   def build_elastic_index(terms, socket) do
     if terms |> Map.has_key?("QUERY_OPERATOR") do
       %{filter_term: "QUERY_OPERATOR", search_index: "_all"}
@@ -41,7 +41,6 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     end
   end
 
-  @impl true
   def process_request(terms, socket) do
     index_terms = build_elastic_index(terms, socket)
 
@@ -63,24 +62,31 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
         headers: ["User-Agent": "Dedalos", "Content-Type": "application/json"]
       )
 
+    total_res = raw_response.body
+    |> Jason.decode!()
+    |> Map.fetch("hits")
+    |> elem(1)
+    |> Map.fetch("total")
+    |> elem(1)
+    
+    results_rec =  
     raw_response.body
     |> Jason.decode!()
     |> Map.fetch("hits")
     |> elem(1)
-    |> tap(&get_total_results(&1, socket ))
     |> Map.fetch("hits")
     |> elem(1)
+
+    Map.new(total_results: total_res, results_records: results_rec)
+    |> tap(&IO.inspect(&1))
+    
   end
 
-  @impl true
-  def get_total_results(tr,socket) do
-    total_res =
-      tr["total"]
-
-    socket =
-      socket
-      |> assign(results_qty: total_res)
-      |> tap(&IO.inspect(&1))
+  def get_total_results(tr, socket) do
+    total_res = tr["total"]
+    # socket = assign(socket, results_qty: total_res)
+    # {:noreply, socket}
+    
   end
 
   def get_total_pages(assigns) do
@@ -106,8 +112,11 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
   end
 
   @impl true
-  def handle_event("page_change", params, socket) do
-    {:noreply, assign(socket, page_number: params["page_number"] |> String.to_integer())}
+  def handle_event("page_change",params, socket) do
+    socket = assign(socket, page_number: params["page_number"] |> String.to_integer())
+    
+    {:noreply, socket}
+    |> tap(&IO.inspect(&1))
   end
 
   def fa_icon_generator(id) do
@@ -139,6 +148,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
   def render(assigns) do
     results =
       process_request(assigns.query_params, @socket)
+      |> Map.fetch!(:results_records)
       |> paginate_response(%{page: assigns.page_number, page_size: assigns.page_size})
 
     filtered_results =
@@ -150,6 +160,17 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
       <%= live_component(@socket, DedalosPhoenixWeb.NavbarLive) %>
     </div>
     <br />
+    <br />
+
+    <br />
+    <div class="pageNumberDisplay">
+      Hi the selected page is <%= @page_number |> to_string() %>
+    </div>
+
+    <div class="resultsDisplay">
+      The total amount of results are <%= @results_qty |> to_string() %>
+    </div>
+
     <br />
 
     <button
