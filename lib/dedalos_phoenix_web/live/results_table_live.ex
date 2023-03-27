@@ -82,15 +82,10 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     
   end
 
-  def get_total_results(tr, socket) do
-    total_res = tr["total"]
-    # socket = assign(socket, results_qty: total_res)
-    # {:noreply, socket}
-    
-  end
 
-  def get_total_pages(assigns) do
-    (assigns.results_qty / assigns.page_size)
+  def get_total_pages(assigns,qty_res) do
+#    (assigns.results_qty / assigns.page_size)
+    (qty_res / assigns.page_size)
     |> Float.ceil()
     |> round()
   end
@@ -146,6 +141,11 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
   end
 
   def render(assigns) do
+
+    total_results = 
+    process_request(assigns.query_params, @socket)
+    |> Map.fetch!(:total_results)
+    
     results =
       process_request(assigns.query_params, @socket)
       |> Map.fetch!(:results_records)
@@ -159,19 +159,9 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     <div>
       <%= live_component(@socket, DedalosPhoenixWeb.NavbarLive) %>
     </div>
-    <br />
-    <br />
-
-    <br />
-    <div class="pageNumberDisplay">
-      Hi the selected page is <%= @page_number |> to_string() %>
-    </div>
-
-    <div class="resultsDisplay">
-      The total amount of results are <%= @results_qty |> to_string() %>
-    </div>
-
-    <br />
+    <br>
+    <br>
+    <br>
 
     <button
       phx-click="reload_search"
@@ -182,7 +172,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     </button>
 
     <div class="localResults mx-4 py-1">
-      <h4>Se han obtenido <%= @results_qty %> resultados</h4>
+      <h4>Se han obtenido <%= total_results %> resultados</h4>
     </div>
 
     <div class="remoteResults mx-4 py-1">
@@ -279,7 +269,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
             </a>
           </li>
 
-          <%= for i <- 1..get_total_pages(assigns) do %>
+          <%= for i <- 1..get_total_pages(assigns,total_results) do %>
             <li class="page-item">
               <a
                 phx-click="page_change"
