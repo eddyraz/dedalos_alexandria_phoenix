@@ -3166,8 +3166,10 @@ ul.contact-info2 i.fa {
   background-color: #eee;
   
 }
-.nav-link.active {
-  
+a.nav-link.active {
+    color: lightgoldenrodyellow  ;
+    font-size 14px ;
+	   
 }
 /*.controls a.active {
   background: rgba(0, 0, 0, 0.47);

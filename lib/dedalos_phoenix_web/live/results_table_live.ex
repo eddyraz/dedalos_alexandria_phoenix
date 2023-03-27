@@ -78,7 +78,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     |> elem(1)
 
     Map.new(total_results: total_res, results_records: results_rec)
-    |> tap(&IO.inspect(&1))
+    
     
   end
 
@@ -111,7 +111,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     socket = assign(socket, page_number: params["page_number"] |> String.to_integer())
     
     {:noreply, socket}
-    |> tap(&IO.inspect(&1))
+    
   end
 
   def fa_icon_generator(id) do
@@ -225,6 +225,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
           </tr>
         </thead>
         <tbody>
+          
           <%= for y <- filtered_results do %>
             <tr class="border-b-gray-300 even:bg-white odd:bg-gray-200 hover:bg-gray-600 hover:text-light-golden-rod-yellow">
               <td class="p-2 border-r border-gray-300"><%= y[:_source][:signatura] %></td>
@@ -269,6 +270,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
             </a>
           </li>
 
+          <%= if  get_total_pages(assigns,total_results)  <= 15   do %>
           <%= for i <- 1..get_total_pages(assigns,total_results) do %>
             <li class="page-item">
               <a
@@ -281,7 +283,25 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
               </a>
             </li>
           <% end %>
+          
+          <% else %>
 
+
+          <%= for i <- 1..15 do %>
+            <li class="page-item">
+              <a
+                phx-click="page_change"
+                phx-value-page_number={i}
+                class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                href="#"
+              >
+                <%= i %>
+              </a>
+            </li>
+          <% end %>
+          <% end %>
+   
+          
           <li class="page-item">
             <a
               phx-click="page_change"
