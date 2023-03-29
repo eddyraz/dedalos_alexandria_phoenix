@@ -32,8 +32,6 @@ defmodule DedalosPhoenixWeb.OpacLive do
 
   @impl true
   def handle_event("advanced_search", params, socket) do
-   # params |> IO.inspect()
-
     filtered_query_params = filter_query_fields(params)
 
     {:noreply, assign(socket, query_p: filtered_query_params, redirect: true)}
@@ -43,7 +41,6 @@ defmodule DedalosPhoenixWeb.OpacLive do
       |> query_builder()
 
     url_query_parameters = ~p"/results" <> "?" <> qterms
-
     {:noreply, push_navigate(socket, to: url_query_parameters, replace: false)}
   end
 

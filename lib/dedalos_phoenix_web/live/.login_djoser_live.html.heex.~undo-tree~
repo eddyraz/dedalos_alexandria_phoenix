@@ -1,7 +1,7 @@
 (undo-tree-save-format-version . 1)
 "e00bec1a21b593dfbec5c55498837f462c244d9a"
 [nil nil nil nil (25562 50954 293307 553000) 0 nil]
-([nil nil ((#("'" 0 1 (syntax-table (1) fontified t)) . -2997) (undo-tree-id0 . -1) 2998 (t 24538 27130 0 0)) nil (25562 50954 293302 664000) 0 nil])
+([nil nil ((#("'" 0 1 (fontified t syntax-table (1))) . -2997) (undo-tree-id0 . -1) 2998 (t 24538 27130 0 0)) nil (25562 50954 293302 664000) 0 nil])
 ([nil nil ((1194 . 1199) (t 25562 50954 293228 283000)) nil (25565 11384 490302 591000) 0 nil])
 ([nil nil ((#("    " 0 4 (fontified nil)) . -1190) (undo-tree-id4 . -4) (1199 . 1200)) nil (25565 11384 490296 934000) 0 nil])
 ([nil current ((#("

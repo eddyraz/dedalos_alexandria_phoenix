@@ -203,6 +203,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
         m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
       "
+          phx-hook="searchFilter"
           id="fzf"
           placeholder="Filtre los Resultados"
         />
@@ -212,7 +213,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     </div>
 
     <div class="flex justify-center">
-      <table class="table-auto min-w-full  border border-gray:900 ">
+      <table class="table-auto min-w-full  border border-gray:900 " id="results_table">
         <thead class="bg-dedalos-green h-10 text-whitesmoke">
           <tr class="min-h-auto">
             <th class="p-2 border-r cursor-pointer">Signatura</th>
