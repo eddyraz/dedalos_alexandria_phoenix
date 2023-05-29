@@ -1,5 +1,5 @@
 (undo-tree-save-format-version . 1)
-"d084d00a012a4b69bba9d0b3cfad6fd6fbd51d73"
+"cb245424eafdc41ebc3074ea60da3f4909cfb78a"
 [nil nil nil nil (25584 61954 731440 100000) 0 nil]
 ([nil nil ((#("def handle_event(\"basic_search\", params, socket) do
 
@@ -417,7 +417,10 @@
 ([nil nil ((#(" " 0 1 (fontified t face font-lock-string-face)) . -1288) (undo-tree-id37 . -1) (undo-tree-id38 . -1) (undo-tree-id39 . -1) (undo-tree-id40 . -1) (undo-tree-id41 . -1) (#(" " 0 1 (fontified t face font-lock-string-face)) . -1289) (undo-tree-id42 . -1) (undo-tree-id43 . -1) (undo-tree-id44 . -1) (undo-tree-id45 . -1) (#(" " 0 1 (fontified t face font-lock-string-face)) . -1290) (undo-tree-id46 . -1) (undo-tree-id47 . -1) (undo-tree-id48 . -1) 1291) nil (25621 50641 387357 783000) 0 nil])
 ([nil nil ((#("<" 0 1 (fontified t face font-lock-string-face)) . -1166) (undo-tree-id81 . -1) (undo-tree-id82 . -1) (undo-tree-id83 . -1) (undo-tree-id84 . -1) (#("!" 0 1 (fontified t face font-lock-string-face)) . -1167) (undo-tree-id85 . -1) (undo-tree-id86 . -1) (undo-tree-id87 . -1) (#("-" 0 1 (fontified t face font-lock-string-face)) . -1168) (undo-tree-id88 . -1) (undo-tree-id89 . -1) (#("-" 0 1 (fontified t face font-lock-string-face)) . -1169) (undo-tree-id90 . -1) 1170 (t 25621 50641 408577 764000)) nil (25621 50668 653858 693000) 0 nil])
 ([nil nil ((#("-" 0 1 (fontified t face font-lock-string-face)) . -1308) (undo-tree-id75 . -1) (undo-tree-id76 . -1) (undo-tree-id77 . -1) (#("-" 0 1 (fontified t face font-lock-string-face)) . -1309) (undo-tree-id78 . -1) (undo-tree-id79 . -1) (#(">" 0 1 (fontified t face font-lock-string-face)) . -1310) (undo-tree-id80 . -1) 1311) nil (25621 50668 653836 611000) 0 nil])
-([nil current ((#("
+([nil nil ((#("
        <a id=\"tab_2\" class=\"tab tab-lifted\"  phx-click={show_active_content(\"#content_tab_2\") set_active_tab(\"#tab_2\")}>Busqueda Avanzada</a> 
 " 0 1 (fontified t face font-lock-string-face) 1 10 (fontified t face font-lock-string-face) 10 45 (fontified t face font-lock-string-face) 45 52 (fontified t face font-lock-string-face) 52 57 (fontified t face font-lock-string-face) 57 93 (fontified t face font-lock-string-face) 93 94 (rear-nonsticky t fontified t face font-lock-string-face) 94 95 (fontified t face font-lock-string-face) 95 142 (fontified t face font-lock-string-face) 142 143 (rear-nonsticky t fontified t face font-lock-string-face) 143 144 (fontified t face font-lock-string-face)) . -1308) (undo-tree-id57 . -46) (undo-tree-id58 . -45) (undo-tree-id59 . -45) (undo-tree-id60 . -57) (undo-tree-id61 . -46) (undo-tree-id62 . -144) (undo-tree-id63 . -144) (undo-tree-id64 . -144) (undo-tree-id65 . -144) (undo-tree-id66 . -46) (undo-tree-id67 . -45) (undo-tree-id68 . -1) (undo-tree-id69 . -1) (undo-tree-id70 . 144) (undo-tree-id71 . 144) (undo-tree-id72 . 144) (undo-tree-id73 . -144) (undo-tree-id74 . -144) 1452) nil (25621 50668 653813 568000) 0 nil])
+([nil nil ((244 . 245) (t 25621 52132 630804 91000)) nil (25626 15199 457982 373000) 0 nil])
+([nil nil ((262 . 266) (244 . 245) (260 . 261)) nil (25626 15199 457981 51000) 0 nil])
+([nil current ((266 . 268)) nil (25626 15199 457977 33000) 0 nil])
 nil

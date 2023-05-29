@@ -23,40 +23,35 @@ import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 
 
-import jquery from "jquery"
-
-
 let hooks = {}
 
 hooks.saveLoginToken = {
     mounted() {
     	this.handleEvent("save_login_token", ({payload}) => {
-           localStorage.setItem("login_token", payload)    
-	    
-   })	
-
-
-
+           localStorage.setItem("login_token", payload)})	
   },    
 };
 
 
 
-hooks.searchFilter ={
-    mounted() {
-    this.el.addEventListener("input", e => {	
-  
-               $("#fzf").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#dedalost tr").filter(function() {
-                        $(this).toggle($(this).text()
-                        .toLowerCase().indexOf(value) > -1)
-                    });
 
-               });
-      })
-    }		       
+hooks.searchFilter = {
+
+
+    mounted() {
+
+
+	    document.querySelector("#fzf").addEventListener("keyup", function() {
+            var value = this.value.toLowerCase();
+            document.querySelectorAll("#dedalos_tr").forEach(function(row) {
+            row.style.display = row.textContent.toLowerCase().indexOf(value) > -1 ? "" : "none";  });
+                });
+	    },
+    
 };
+
+
+
 
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")

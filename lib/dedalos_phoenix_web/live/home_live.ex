@@ -8,29 +8,29 @@ defmodule DedalosPhoenixWeb.HomeLive do
   def render(assigns) do
     ~H"""
      <div>
-        <%= live_component(@socket,DedalosPhoenixWeb.NavbarLive)%>
+        <%= live_component(DedalosPhoenixWeb.NavbarLive)%>
       </div>
 
      <div class="py-20">
 
-        <%= live_component(@socket,DedalosPhoenixWeb.CarrouselLive)%>
+        <%= live_component(DedalosPhoenixWeb.CarrouselLive)%>
       </div>
 
       <div>
-        <%= live_component(@socket,DedalosPhoenixWeb.AboutLive)%>
+        <%= live_component(DedalosPhoenixWeb.AboutLive)%>
       </div>
 
       <div>
-        <%= live_component(@socket,DedalosPhoenixWeb.DutiesLive)%>
+        <%= live_component(DedalosPhoenixWeb.DutiesLive)%>
       </div>
      
 
     <div>
-        <%= live_component(@socket,DedalosPhoenixWeb.MembersLive)%>
+        <%= live_component(DedalosPhoenixWeb.MembersLive)%>
       </div>
 
       <div>
-        <%= live_component(@socket,DedalosPhoenixWeb.FooterLive)%>
+        <%= live_component(DedalosPhoenixWeb.FooterLive)%>
       </div>
 
 

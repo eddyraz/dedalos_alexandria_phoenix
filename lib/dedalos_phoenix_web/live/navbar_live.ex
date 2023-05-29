@@ -53,17 +53,18 @@ defmodule DedalosPhoenixWeb.NavbarLive do
             <div class="flex space-x-4">
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
 
-	      <a href="/home" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
-
+	      <a href="/home" class="text-lightgoldenrodyellow hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ">Inicio</a>
+             <ul> 
 	      <li class="nav-item-active">
               <a href="/opac" class="nav-link active" aria-expanded="false">Catálogo en Linea</a>  
 	       </li>
+	      </ul>
 	      
-<!-- 	      <a href="/opac" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Catálogo en linea</a> -->
-
-	      
+                         <ul> 
+	      <li class="nav-item-active">
               <a href="/about" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"> Quienes Somos</a>
-
+               </li>
+               </ul>
 
             <a href="/boletines" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Nuestro boletín</a>
 

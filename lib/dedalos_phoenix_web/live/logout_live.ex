@@ -3,7 +3,7 @@ defmodule DedalosPhoenixWeb.LogoutLive do
   use DedalosPhoenixWeb, :live_view
   
   def mount(_params, _sessions, socket) do
-    {:ok, assign(socket, message: Hi, "auth_token": "", is_authenticated: false)}
+    {:ok, assign(socket, message: Hi, auth_token: "", is_authenticated: false)}
 
     
     

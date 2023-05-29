@@ -8,7 +8,8 @@ defmodule DedalosPhoenixWeb.SearchBarLive do
   end
 
   def get_query_params(qp) do
-    IO.inspect(qp)
+    # IO.inspect(qp)
+    qp
   end
 
 

@@ -8,10 +8,10 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     {:ok,
      assign(socket,
        page_number: 1,
-       page_size: 2,
-       results_qty: 20,
+       page_size: 10,
+       results_qty: 100,
        query_params: params,
-       #       search_index: "",
+       pagination_page: "",
        filtered_results: []
      )}
   end
@@ -23,17 +23,16 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
   def get_results(params, socket) do
     results =
       process_request(params, socket)
+      |> Map.fetch!(:results_records)
       |> paginate_response(%{page: params["page_number"], page_size: params["page_size"]})
 
-    socket =
-      assign(socket,
-        filtered_results:
-          results
-          |> Enum.map(fn x -> x |> to_keyword_list() end)
-      )
+    assign(socket,
+      filtered_results:
+        results
+        |> Enum.map(fn x -> x |> to_keyword_list() end)
+    )
   end
 
-  @impl true
   def build_elastic_index(terms, socket) do
     if terms |> Map.has_key?("QUERY_OPERATOR") do
       %{filter_term: "QUERY_OPERATOR", search_index: "_all"}
@@ -42,7 +41,6 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     end
   end
 
-  @impl true
   def process_request(terms, socket) do
     index_terms = build_elastic_index(terms, socket)
 
@@ -64,16 +62,28 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
         headers: ["User-Agent": "Dedalos", "Content-Type": "application/json"]
       )
 
-    raw_response.body
-    |> Jason.decode!()
-    |> Map.fetch("hits")
-    |> elem(1)
-    |> Map.fetch("hits")
-    |> elem(1)
+    total_res =
+      raw_response.body
+      |> Jason.decode!()
+      |> Map.fetch("hits")
+      |> elem(1)
+      |> Map.fetch("total")
+      |> elem(1)
+
+    results_rec =
+      raw_response.body
+      |> Jason.decode!()
+      |> Map.fetch("hits")
+      |> elem(1)
+      |> Map.fetch("hits")
+      |> elem(1)
+
+    Map.new(total_results: total_res, results_records: results_rec)
   end
 
-  def get_total_pages(assigns) do
-    (assigns.results_qty / assigns.page_size)
+  def get_total_pages(assigns, qty_res) do
+    #    (assigns.results_qty / assigns.page_size)
+    (qty_res / assigns.page_size)
     |> Float.ceil()
     |> round()
   end
@@ -89,27 +99,18 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
           is_map(v) -> to_keyword_list(v)
           true -> v
         end
+
       {String.to_atom("#{k}"), v}
     end)
   end
 
   @impl true
   def handle_event("page_change", params, socket) do
-    socket = socket
-    |> assign(
-       socket,
-       %{
-          page_number: params["page_number"] |> String.to_integer()
-        }
-    )
-    {:noreply, assign(socket, params: params)}
-    |> IO.inspect()
+    socket = assign(socket, page_number: params["page_number"] |> String.to_integer())
 
-
-
+    {:noreply, socket}
   end
 
-  
   def fa_icon_generator(id) do
     case id do
       "opac_libros" -> %{name: "book", label_text: "Libro"}
@@ -137,19 +138,24 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
   end
 
   def render(assigns) do
-    # results =
-    #   process_request(assigns.query_params)
-    #   |> paginate_respose(%{page: assigns.page_number, page_size: assigns.page_size})
+    total_results =
+      process_request(assigns.query_params, @socket)
+      |> Map.fetch!(:total_results)
 
-    # filtered_results =
-    #   results
-    #   |> Enum.map(fn x -> x |> to_keyword_list() end)
+    results =
+      process_request(assigns.query_params, @socket)
+      |> Map.fetch!(:results_records)
+      |> paginate_response(%{page: assigns.page_number, page_size: assigns.page_size})
 
-    
+    filtered_results =
+      results
+      |> Enum.map(fn x -> x |> to_keyword_list() end)
+
     ~H"""
     <div>
       <%= live_component(@socket, DedalosPhoenixWeb.NavbarLive) %>
     </div>
+    <br />
     <br />
     <br />
 
@@ -158,8 +164,19 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
       type="button"
       class="inline-block ml-4 my-10 hover:bg-gray-200 hover:text-light-golden-rod-yellow px-6 py-2.5 bg-gray-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-900 hover:shadow-lg focus:bg-gray-900 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-900 active:shadow-lg transition duration-150 ease-in-out"
     >
-      Buscar de nuevo
+      Volver a Buscar
     </button>
+
+    <div class="localResults mx-4 py-1">
+      <h4>Se han obtenido <%= total_results %> resultados</h4>
+    </div>
+
+    <div class="remoteResults mx-4 py-1">
+      <h4>
+        Para resultados en otras bibliotecas pulse
+        <a href="http://biblioteca.ccpafrevarela.org:4007/results/#RemoteTable">aquí</a>
+      </h4>
+    </div>
 
     <div class="flex justify-left">
       <div class="ml-4 mb-3 xl:w-96">
@@ -182,6 +199,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
         m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
       "
+          phx-hook="searchFilter"
           id="fzf"
           placeholder="Filtre los Resultados"
         />
@@ -191,7 +209,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     </div>
 
     <div class="flex justify-center">
-      <table class="table-auto min-w-full  border border-gray:900 ">
+      <table class="table-auto min-w-full  border border-gray:900 " id="results_table">
         <thead class="bg-dedalos-green h-10 text-whitesmoke">
           <tr class="min-h-auto">
             <th class="p-2 border-r cursor-pointer">Signatura</th>
@@ -204,8 +222,8 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
           </tr>
         </thead>
         <tbody>
-          <%= for y <- @filtered_results do %>
-            <tr class="border-b-gray-300 even:bg-white odd:bg-gray-200 hover:bg-gray-600 hover:text-light-golden-rod-yellow">
+          <%= for y <- filtered_results do %>
+            <tr id="dedalos_tr" class="border-b-gray-300 even:bg-white odd:bg-gray-200 hover:bg-gray-600 hover:text-light-golden-rod-yellow">
               <td class="p-2 border-r border-gray-300"><%= y[:_source][:signatura] %></td>
               <td class="p-2 border-r border-gray-300">
                 <section>
@@ -234,6 +252,11 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
         </tbody>
       </table>
     </div>
+
+
+
+
+
     <div class="flex justify-center my-10">
       <nav aria-label="Page navigation example">
         <ul class="flex list-style-none">
@@ -248,25 +271,37 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
             </a>
           </li>
 
-          <%= for i <- 1..get_total_pages(assigns) do %>
-            <li class="page-item">
-              <a
-                phx-click="page_change"
-                phx-value-page_number={i}
-                class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
-                href="#"
-              >
-                <%= i %>
-              </a>
-            </li>
+          <%= if  get_total_pages(assigns,total_results)  <= 15   do %>
+            <%= for i <- 1..get_total_pages(assigns,total_results) do %>
+              <li class="page-item">
+                <a
+                  phx-click="page_change"
+                  phx-value-page_number={i}
+                  class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                  href="#"
+                >
+                  <%= i %>
+                </a>
+              </li>
+            <% end %>
+          <% else %>
+            <%= for i <- 1..15 do %>
+              <li class="page-item">
+                <a
+                  phx-click="page_change"
+                  phx-value-page_number={i}
+                  class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                  href="#"
+                >
+                  <%= i %>
+                </a>
+              </li>
+            <% end %>
           <% end %>
 
           <li class="page-item">
-            <a
-              phx-click="page_change"
-              class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
-              href="#"
-            >
+            <a phx-click="page_change" class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+              href="#" >
               Siguiente
             </a>
           </li>

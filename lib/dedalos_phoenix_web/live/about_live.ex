@@ -2,17 +2,17 @@ defmodule DedalosPhoenixWeb.AboutLive do
   use DedalosPhoenixWeb, :live_component
 
   def mount(_params, _sessions, socket) do
-    {:ok, assign(socket, score: 10, message: "Hi")}
+    {:ok, assign(socket, score: 10, message: "system loaded")}
     end
 
   def render(assigns) do
     ~H"""
       <div>
-         <section>
-         <div>
-     <br>
-     <br>
-     <br>
+       <section>
+        <div>
+          <br>
+          <br>
+          <br>
           <%= live_component(@socket,DedalosPhoenixWeb.NavbarLive)%>
         </div>
          <div>

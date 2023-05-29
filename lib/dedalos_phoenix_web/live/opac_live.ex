@@ -32,8 +32,6 @@ defmodule DedalosPhoenixWeb.OpacLive do
 
   @impl true
   def handle_event("advanced_search", params, socket) do
-   # params |> IO.inspect()
-
     filtered_query_params = filter_query_fields(params)
 
     {:noreply, assign(socket, query_p: filtered_query_params, redirect: true)}
@@ -43,22 +41,19 @@ defmodule DedalosPhoenixWeb.OpacLive do
       |> query_builder()
 
     url_query_parameters = ~p"/results" <> "?" <> qterms
-
     {:noreply, push_navigate(socket, to: url_query_parameters, replace: false)}
   end
 
-  @impl true
   defp filter_query_fields(qp) do
     qp
     |> Map.filter(fn {k, v} -> v != "" end)
   end
 
-  @impl true
   def check_profile(usr, pwd, socket) do
     token = get_login_token(usr, pwd, socket)
 
     {:ok, raw_response} =
-      Tesla.get('http://biblioteca.ccpadrevarela.org/auth/users/me/',
+      Tesla.get('http://biblioteca.ccpadrevarela.org:8006/auth/users/me/',
         headers: [
           "User-Agent": "Dedalos",
           "Content-Type": "application/json",
@@ -78,7 +73,6 @@ defmodule DedalosPhoenixWeb.OpacLive do
     send_token_to_browser(socket, params, login_token)
   end
 
-  @impl true
   def send_token_to_browser(socket, params, login_token) do
     if login_token do
       socket = socket |> assign(:is_authenticated, true)
@@ -88,28 +82,28 @@ defmodule DedalosPhoenixWeb.OpacLive do
     end
   end
 
-  @impl true
   def blur_component(js \\ %JS{}, tag) do
     js
     |> JS.add_class("blur-sm", to: tag)
   end
 
-  @impl true
   def unblur_component(js \\ %JS{}, tag) do
     js
     |> JS.remove_class("blur-sm", to: tag)
   end
 
-  @impl true
   def get_login_token(usr, pwd, socket) do
     p_body = %{username: usr, password: pwd}
 
     body = Jason.encode(p_body) |> elem(1)
 
     raw_response =
-      Tesla.post!('http://biblioteca.ccpadrevarela.org/auth/token/login', body,
+      Tesla.post!('http://biblioteca.ccpadrevarela.org:8006/auth/token/login', body,
         headers: ["User-Agent": "Dedalos", "Content-Type": "application/json"]
       )
+
+    raw_response
+    |> IO.inspect
 
     raw_response.body
     |> Jason.decode()

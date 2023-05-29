@@ -3,7 +3,7 @@ defmodule DedalosPhoenixWeb.AppLive do
   use DedalosPhoenixWeb, :live_view ;
 
   def mount(_params, _sessions, socket) do
-    {:ok, assign(socket, score: 0, message: "Hi")}
+    {:ok, assign(socket, score: 0, message: "system Loaded")}
     end
 
   def render(assigns) do

@@ -32,7 +32,7 @@ defmodule DedalosPhoenix.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.7.1"},
+      {:phoenix, "~> 1.7.2"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
@@ -55,7 +55,8 @@ defmodule DedalosPhoenix.MixProject do
       {:scrivener_list, "~> 2.0"},
       {:tesla, "~> 1.4"},
       {:hackney, "~> 1.17"},
-      {:ex_fontawesome, "~> 0.7.2"}
+      {:ex_fontawesome, "~> 0.7.2"},
+      {:petal_components, "~> 1.0"}
       
     ]
   end

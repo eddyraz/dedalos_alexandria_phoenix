@@ -5,8 +5,8 @@ defmodule DedalosPhoenixWeb.ContactLive do
   def mount(_params, _session, socket) do
     {:ok, assign(socket, email: "mx.arqhabana.net")}
    end
-
-
+  
+  
   def render(assigns) do
     ~H"""
     <div>

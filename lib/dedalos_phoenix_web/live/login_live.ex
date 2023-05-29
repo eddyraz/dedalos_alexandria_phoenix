@@ -5,15 +5,15 @@ defmodule DedalosPhoenixWeb.LoginLive do
   alias Phoenix.Plug.Conn
 
   alias Phoenix.LiveView.JS
-  
+
   def mount(_params, _sessions, socket) do
     {:ok, assign(socket, message: "Hi", id: 4)}
   end
 
 
-  
-  
-  
+
+
+
   def render(assigns) do
     ~H"""
     <section class="h-screen">
@@ -35,7 +35,7 @@ defmodule DedalosPhoenixWeb.LoginLive do
 
 
         <form phx-submit="check_login_credentials"  id="login_form">
-           
+
           <div class="flex flex-row items-center justify-center lg:justify-start">
             <p class="font-extrabold text-lg font-serif mb-0 mr-4  ">Biblioteca Centro Cultural Padre Félix Varela</p>
               </div>
@@ -48,10 +48,10 @@ defmodule DedalosPhoenixWeb.LoginLive do
 
           <!-- Username input -->
           <div class="mb-6">
-          
-         
-             
-         <input type="text" name="user_name" class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
+
+
+
+         <input type="text" name="user_name" class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               id="exampleFormControlInput1"
               placeholder="Nombre de usuario"
             />
@@ -80,7 +80,7 @@ defmodule DedalosPhoenixWeb.LoginLive do
             </div>
     <!--            <a href="#!" class="text-gray-800">Forgot password?</a> -->
           </div>
-          
+
 
           <div class="text-center lg:text-left">
             <button
@@ -92,7 +92,7 @@ defmodule DedalosPhoenixWeb.LoginLive do
             <p class="text-sm font-semibold mt-2 pt-1 mb-0">
               ¿No tiene una cuenta?
               <a
-                href="http://biblioteca.ccpadrevarela.org:4005/register"
+                href="http://biblioteca.ccpadrevarela.org:8006/register"
                 class="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
                 >Registrese</a>
             </p>
