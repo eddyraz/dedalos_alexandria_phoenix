@@ -33,25 +33,15 @@ hooks.saveLoginToken = {
 };
 
 
-
-
 hooks.searchFilter = {
-
-
     mounted() {
-
-
 	    document.querySelector("#fzf").addEventListener("keyup", function() {
             var value = this.value.toLowerCase();
             document.querySelectorAll("#dedalos_tr").forEach(function(row) {
             row.style.display = row.textContent.toLowerCase().indexOf(value) > -1 ? "" : "none";  });
                 });
 	    },
-    
 };
-
-
-
 
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
