@@ -2,9 +2,6 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
   use DedalosPhoenixWeb, :live_view
   use Phoenix.HTML
 
-  use PetalComponents
-
-
   alias DedalosPhoenixWeb.{OpacLive, NavBarLive}
 
   def mount(params, _session, socket) do
@@ -257,12 +254,6 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     </div>
 
 
-
-   <.pagination
-  link_type="live_patch"
-  path="/components/pagination/:page"
-  current_page={@pagination_page} total_pages={10}
-   />
 
 
 
