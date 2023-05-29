@@ -109,7 +109,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
 
   end
 
-  
+
   def fa_icon_generator(id) do
     case id do
       "opac_libros" -> %{name: "book", label_text: "Libro"}
@@ -145,7 +145,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     #   results
     #   |> Enum.map(fn x -> x |> to_keyword_list() end)
 
-    
+
     ~H"""
     <div>
       <%= live_component(@socket, DedalosPhoenixWeb.NavbarLive) %>
@@ -205,7 +205,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
         </thead>
         <tbody>
           <%= for y <- @filtered_results do %>
-            <tr class="border-b-gray-300 even:bg-white odd:bg-gray-200 hover:bg-gray-600 hover:text-light-golden-rod-yellow">
+            <tr id="dedalos_tr" class="border-b-gray-300 even:bg-white odd:bg-gray-200 hover:bg-gray-600 hover:text-light-golden-rod-yellow">
               <td class="p-2 border-r border-gray-300"><%= y[:_source][:signatura] %></td>
               <td class="p-2 border-r border-gray-300">
                 <section>

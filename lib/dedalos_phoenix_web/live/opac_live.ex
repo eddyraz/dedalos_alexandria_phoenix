@@ -58,7 +58,7 @@ defmodule DedalosPhoenixWeb.OpacLive do
     token = get_login_token(usr, pwd, socket)
 
     {:ok, raw_response} =
-      Tesla.get('http://biblioteca.ccpadrevarela.org/auth/users/me/',
+      Tesla.get('http://biblioteca.ccpadrevarela.org:8006/auth/users/me/',
         headers: [
           "User-Agent": "Dedalos",
           "Content-Type": "application/json",
@@ -107,7 +107,7 @@ defmodule DedalosPhoenixWeb.OpacLive do
     body = Jason.encode(p_body) |> elem(1)
 
     raw_response =
-      Tesla.post!('http://biblioteca.ccpadrevarela.org/auth/token/login', body,
+      Tesla.post!('http://biblioteca.ccpadrevarela.org:8006/auth/token/login', body,
         headers: ["User-Agent": "Dedalos", "Content-Type": "application/json"]
       )
 

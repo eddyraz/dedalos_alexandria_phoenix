@@ -48,7 +48,7 @@ hooks.searchFilter ={
   
                $("#fzf").on("keyup", function() {
                     var value = $(this).val().toLowerCase();
-                    $("#dedalost tr").filter(function() {
+                    $("#dedalos_tr").filter(function() {
                         $(this).toggle($(this).text()
                         .toLowerCase().indexOf(value) > -1)
                     });
