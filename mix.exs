@@ -57,7 +57,7 @@ defmodule DedalosPhoenix.MixProject do
       {:hackney, "~> 1.17"},
       {:ex_fontawesome, "~> 0.7.2"},
       {:petal_components, "~> 1.0"}
-      
+
     ]
   end
 
