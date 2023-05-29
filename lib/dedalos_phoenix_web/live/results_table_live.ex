@@ -2,6 +2,9 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
   use DedalosPhoenixWeb, :live_view
   use Phoenix.HTML
 
+  use PetalComponents
+
+
   alias DedalosPhoenixWeb.{OpacLive, NavBarLive}
 
   def mount(params, _session, socket) do
@@ -11,6 +14,7 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
        page_size: 10,
        results_qty: 100,
        query_params: params,
+       pagination_page: "",
        filtered_results: []
      )}
   end
@@ -22,15 +26,14 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
   def get_results(params, socket) do
     results =
       process_request(params, socket)
-      |> Map.fetch!(:results_records )
+      |> Map.fetch!(:results_records)
       |> paginate_response(%{page: params["page_number"], page_size: params["page_size"]})
 
-    socket =
-      assign(socket,
-        filtered_results:
-          results
-          |> Enum.map(fn x -> x |> to_keyword_list() end)
-      )
+    assign(socket,
+      filtered_results:
+        results
+        |> Enum.map(fn x -> x |> to_keyword_list() end)
+    )
   end
 
   def build_elastic_index(terms, socket) do
@@ -62,29 +65,27 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
         headers: ["User-Agent": "Dedalos", "Content-Type": "application/json"]
       )
 
-    total_res = raw_response.body
-    |> Jason.decode!()
-    |> Map.fetch("hits")
-    |> elem(1)
-    |> Map.fetch("total")
-    |> elem(1)
-    
-    results_rec =  
-    raw_response.body
-    |> Jason.decode!()
-    |> Map.fetch("hits")
-    |> elem(1)
-    |> Map.fetch("hits")
-    |> elem(1)
+    total_res =
+      raw_response.body
+      |> Jason.decode!()
+      |> Map.fetch("hits")
+      |> elem(1)
+      |> Map.fetch("total")
+      |> elem(1)
+
+    results_rec =
+      raw_response.body
+      |> Jason.decode!()
+      |> Map.fetch("hits")
+      |> elem(1)
+      |> Map.fetch("hits")
+      |> elem(1)
 
     Map.new(total_results: total_res, results_records: results_rec)
-    
-    
   end
 
-
-  def get_total_pages(assigns,qty_res) do
-#    (assigns.results_qty / assigns.page_size)
+  def get_total_pages(assigns, qty_res) do
+    #    (assigns.results_qty / assigns.page_size)
     (qty_res / assigns.page_size)
     |> Float.ceil()
     |> round()
@@ -107,11 +108,10 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
   end
 
   @impl true
-  def handle_event("page_change",params, socket) do
+  def handle_event("page_change", params, socket) do
     socket = assign(socket, page_number: params["page_number"] |> String.to_integer())
-    
+
     {:noreply, socket}
-    
   end
 
   def fa_icon_generator(id) do
@@ -141,11 +141,10 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
   end
 
   def render(assigns) do
+    total_results =
+      process_request(assigns.query_params, @socket)
+      |> Map.fetch!(:total_results)
 
-    total_results = 
-    process_request(assigns.query_params, @socket)
-    |> Map.fetch!(:total_results)
-    
     results =
       process_request(assigns.query_params, @socket)
       |> Map.fetch!(:results_records)
@@ -159,9 +158,9 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
     <div>
       <%= live_component(@socket, DedalosPhoenixWeb.NavbarLive) %>
     </div>
-    <br>
-    <br>
-    <br>
+    <br />
+    <br />
+    <br />
 
     <button
       phx-click="reload_search"
@@ -226,9 +225,8 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
           </tr>
         </thead>
         <tbody>
-          
           <%= for y <- filtered_results do %>
-            <tr class="border-b-gray-300 even:bg-white odd:bg-gray-200 hover:bg-gray-600 hover:text-light-golden-rod-yellow">
+            <tr id="dedalos_tr" class="border-b-gray-300 even:bg-white odd:bg-gray-200 hover:bg-gray-600 hover:text-light-golden-rod-yellow">
               <td class="p-2 border-r border-gray-300"><%= y[:_source][:signatura] %></td>
               <td class="p-2 border-r border-gray-300">
                 <section>
@@ -257,6 +255,17 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
         </tbody>
       </table>
     </div>
+
+
+
+   <.pagination
+  link_type="live_patch"
+  path="/components/pagination/:page"
+  current_page={@pagination_page} total_pages={10}
+   />
+
+
+
     <div class="flex justify-center my-10">
       <nav aria-label="Page navigation example">
         <ul class="flex list-style-none">
@@ -272,43 +281,36 @@ defmodule DedalosPhoenixWeb.ResultsTableLive do
           </li>
 
           <%= if  get_total_pages(assigns,total_results)  <= 15   do %>
-          <%= for i <- 1..get_total_pages(assigns,total_results) do %>
-            <li class="page-item">
-              <a
-                phx-click="page_change"
-                phx-value-page_number={i}
-                class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
-                href="#"
-              >
-                <%= i %>
-              </a>
-            </li>
-          <% end %>
-          
+            <%= for i <- 1..get_total_pages(assigns,total_results) do %>
+              <li class="page-item">
+                <a
+                  phx-click="page_change"
+                  phx-value-page_number={i}
+                  class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                  href="#"
+                >
+                  <%= i %>
+                </a>
+              </li>
+            <% end %>
           <% else %>
-
-
-          <%= for i <- 1..15 do %>
-            <li class="page-item">
-              <a
-                phx-click="page_change"
-                phx-value-page_number={i}
-                class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
-                href="#"
-              >
-                <%= i %>
-              </a>
-            </li>
+            <%= for i <- 1..15 do %>
+              <li class="page-item">
+                <a
+                  phx-click="page_change"
+                  phx-value-page_number={i}
+                  class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                  href="#"
+                >
+                  <%= i %>
+                </a>
+              </li>
+            <% end %>
           <% end %>
-          <% end %>
-   
-          
+
           <li class="page-item">
-            <a
-              phx-click="page_change"
-              class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
-              href="#"
-            >
+            <a phx-click="page_change" class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+              href="#" >
               Siguiente
             </a>
           </li>

@@ -23,79 +23,36 @@ import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 
 
-import jquery from "jquery"
-
-
 let hooks = {}
 
 hooks.saveLoginToken = {
     mounted() {
     	this.handleEvent("save_login_token", ({payload}) => {
            localStorage.setItem("login_token", payload)})	
-
-
   },    
 };
 
 
 
-// hooks.searchFilter ={
-//     mounted() {
-//     this.el.addEventListener("input", e => {	
-  
-//                $("#fzf").on("keyup", function() {
-//                     var value = $(this).val().toLowerCase();
-//                     $("#dedalost tr").filter(function() {
-//                         $(this).toggle($(this).text()
-//                         .toLowerCase().indexOf(value) > -1)
-//                     });
-
-//                });
-//       })
-//     }		       
-// };
-
 
 hooks.searchFilter = {
-    const input = document.querySelector('#search-input');
-    const table = document.querySelector('#results-table');
-    updated() {
-        this.el.addEventListener("input", e => {
-        searchTerm = this.el.value.toLowerCase()    
-//            console.log(searchTerm)
-	    console.log(table.rows)
-        
-      }),
-    },
+
+
+    mounted() {
+
+
+	    document.querySelector("#fzf").addEventListener("keyup", function() {
+            var value = this.value.toLowerCase();
+            document.querySelectorAll("#dedalos_tr").forEach(function(row) {
+            row.style.display = row.textContent.toLowerCase().indexOf(value) > -1 ? "" : "none";  });
+                });
+	    },
+    
 };
-// hooks.searchFilter2 = {
-// // Get references to the input and table elements
-// const input = document.querySelector('#search-input');
-// const table = document.querySelector('#my-table');
 
-// // Add an event listener to the input element
-// input.addEventListener('input', () => {
-//   // Get the search term entered by the user
-//   const searchTerm = input.value.toLowerCase();
 
-//   // Loop through each row of the table
-//   Array.from(table.rows).forEach(row => {
-//     // Get the text content of the row
-//     const rowData = Array.from(row.cells)
-//       .map(cell => cell.textContent.toLowerCase())
-//       .join('');
 
-//     // Check if the row contains the search term
-//     if (rowData.includes(searchTerm)) {
-//       // Show the row if it contains the search term
-//       row.style.display = '';
-//     } else {
-//       // Hide the row if it doesn't contain the search term
-//       row.style.display = 'none';
-//     }
-//   });
-// });    
-// }
+
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}, hooks: hooks})
